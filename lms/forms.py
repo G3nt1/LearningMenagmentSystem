@@ -1,8 +1,8 @@
 from django import forms
 
-from lms.models import User
+from lms.models import User, Lessons
 from django.contrib.auth.forms import UserCreationForm
-from allauth.account.forms import LoginForm
+
 
 class CreateUserForm(UserCreationForm):
     first_name = forms.CharField(max_length=200, required=True)
@@ -23,3 +23,13 @@ class LoginUserForm(forms.Form):
         email = cleaned_data.get('email')
         password = cleaned_data.get('password')
         return email, password
+
+
+class CreateLessonsForm(forms.ModelForm):
+    class Meta:
+        model = Lessons
+        fields = ('title', 'description', 'link', 'image', 'video', 'category')
+
+
+
+

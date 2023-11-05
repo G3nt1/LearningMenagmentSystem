@@ -242,7 +242,7 @@
               <div class="col">
                 <!-- Page pre-title -->
                 <div class="page-pretitle">
-                  Overview
+                 ........
                 </div>
                 <h2 class="page-title">
 
@@ -252,8 +252,8 @@
               <div class="col-auto ms-auto d-print-none">
                 <div class="btn-list">
                   <span class="d-none d-sm-inline">
-                    <a href="#" class="btn btn-dark">
-                      New view
+                    <a href="{% url 'new_lesson' %}" class="btn btn-info">
+                      Create New Lesson
                     </a>
                   </span>
                   <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
@@ -270,56 +270,46 @@
             </div>
           </div>
         </div>
-        <!-- Page body -->
-        <div class="page-body">
-          <div class="container-xl">
-            <div class="row row-deck row-cards">
-              <div class="col-sm-6 col-lg-3">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex align-items-center">
-                      <div class="subheader">Sales</div>
-                      <div class="ms-auto lh-1">
-                        <div class="dropdown">
-                          <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last 7 days</a>
-                          <div class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item active" href="#">Last 7 days</a>
-                            <a class="dropdown-item" href="#">Last 30 days</a>
-                            <a class="dropdown-item" href="#">Last 3 months</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="h1 mb-3">75%</div>
-                    <div class="d-flex mb-2">
-                      <div>Conversion rate</div>
-                      <div class="ms-auto">
-                        <span class="text-green d-inline-flex align-items-center lh-1">
-                          7% <!-- Download SVG icon from http://tabler-icons.io/i/trending-up -->
-                          <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 17l6 -6l4 4l8 -8"></path><path d="M14 7l7 0l0 7"></path></svg>
-                        </span>
-                      </div>
-                    </div>
-                    <div class="progress progress-sm">
-                      <div class="progress-bar bg-primary" style="width: 75%" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="75% Complete">
-                        <span class="visually-hidden">75% Complete</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <div class="col-lg-4">
-                <div class="card">
-                  <div class="card-body">
-                    <h3 class="card-title">Traffic summary</h3>
-                      <p>dfzgstdhdghsdgadsdgdbdbdafgsdfg</p>
-                    <div id="chart-mentions" class="chart-lg"></div>
-                  </div>
+<div class="row" style="padding: 5px; margin: 5px">
+    {% for lesson in lessons %}
+        <div class="col-sm-6 col-lg-3" style="padding: 20px">
+            <div class="card d-flex flex-column">
+                <a href="#">
+                    <img class="card-img-top" src="" alt=""/>
+                </a>
+                <div class="card-body d-flex flex-column">
+                    <div class="ribbon bg-red">{{ lesson.category.name }}</div>
+                    <h3 class="card-title"><a href="#">{{ lesson.title }}</a></h3>
+                    <div class="text-secondary">{{ lesson.description|truncatechars:400 }}</div>
                 </div>
-              </div>
+                {% if lesson.link %}
+                <a href="{{ lesson.link }}">For more info Click here</a>
+                {% else %}
+                {% endif %}
+                <div class="d-flex align-items-center pt-4 mt-auto" style="margin: auto">
+                    <span class="avatar">{{ user.first_name|first }}{{ user.last_name|first }}</span>
+                    <div class="ms-3">
+                        <a href="#" class="text-body">{{ lesson.creator.first_name }} {{ lesson.creator.last_name }}</a>
+                        <div class="text-secondary">{{ lesson.created_at }}</div>
+                    </div>
+{#                    <div class="ms-auto">#}
+{#                        <a href="#" class="icon d-none d-md-inline-block ms-3 text-secondary">#}
+{#                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart"#}
+{#                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"#}
+{#                                fill="none" stroke-linecap="round" stroke-linejoin="round">#}
+{#                                <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path>#}
+{#                            </svg>#}
+{#                        </a>#}
+{#                    </div>#}
+                </div>
+            </div>
+        </div>
+        {% if forloop.counter|divisibleby:4 %}</div><div class="row">{% endif %}
+    {% endfor %}
+</div>
 
-    <!-- Libs JS -->
+          <!-- Libs JS -->
     <script src="./dist/libs/apexcharts/dist/apexcharts.min.js?1695847769" defer=""></script>
     <script src="./dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1695847769" defer=""></script>
     <script src="./dist/libs/jsvectormap/dist/maps/world.js?1695847769" defer=""></script>
