@@ -18,7 +18,7 @@ class Lessons(models.Model):
     description = models.TextField()
     link = models.URLField(blank=True, null=True)
     image = models.ImageField(upload_to='images/%Y/%m/%d/', blank=True, null=True)
-    video = models.FileField(upload_to='static/videos/%Y/%m/', null=True, blank=True,
+    video = models.FileField(upload_to='videos/%Y/%m/', null=True, blank=True,
                              validators=[
                                  FileExtensionValidator(allowed_extensions=['MOV', 'avi', 'mp4', 'webm', 'mkv'])])
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
