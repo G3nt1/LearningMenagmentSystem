@@ -1,0 +1,38 @@
+{% include 'base.html' %}
+{% block content %}
+    <div class="row">
+    {% for lesson in lesson %}
+        <div class="col-sm-12 col-lg-12" style="padding: 40px" >
+            <div class="card d-flex flex-column">
+
+                <div class="card-body d-flex flex-column">
+
+                    <h3 class="card-title"><a href="{% url 'details_lesson' lesson.id %}">{{ lesson.title }}</a></h3>
+                    <div class="text-secondary">{{ lesson.description}}</div>
+                </div>
+              <a href="#">
+                    {% if lesson.image %}
+                    <img class="card-img-top" src="{{ lesson.image.url }}" alt=""/>
+                {% endif %}
+                </a>
+             {% if lesson.link %}
+                <a style="margin-left: 25px" href="{{ lesson.link }}">For more info Click here</a>
+                {% endif %}
+                <div class="d-flex align-items-start pt-4 mt-auto" style="margin: auto; padding-bottom: 10px">
+                    <span class="avatar">{{ lesson.creator.first_name|first }} {{ lesson.creator.last_name|first }}</span>
+                    <div class="ms-3">
+                        <a href="#" class="text-body">Created By: {{ lesson.creator.first_name }} {{ lesson.creator.last_name }}</a>
+                        <div class="text-secondary">{{ lesson.created_at }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if forloop.counter|divisibleby:4 %}</div><div class="row">{% endif %}
+    {% endfor %}
+</div>
+
+
+
+
+
+{% endblock %}

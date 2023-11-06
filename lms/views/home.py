@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from lms.models import Lessons
+from django.shortcuts import render, redirect, get_object_or_404
+from lms.models import Lessons, Category
 from lms.forms import CreateLessonsForm
 from django.contrib.auth.decorators import login_required
 
@@ -7,8 +7,9 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def home(request):
-    lessons = Lessons.objects.all()
-    return render(request, 'home.html', {'lessons': lessons})
+    category = Category.objects.all()
+    lessons = Lessons.objects.all().order_by('-created_at')
+    return render(request, 'home.html', {'lessons': lessons, 'category': category})
 
 
 @login_required
@@ -26,3 +27,17 @@ def create_lesson(request):
             content = {'form': form}  # Include lessons in the content
             return render(request, 'exercises/create_new_lesson.html', content)
 
+
+def lesson_details(request, lesson_id):
+    lesson = Lessons.objects.filter(id=lesson_id)
+    return render(request, 'exercises/details_lesson.html', {'lesson': lesson})
+
+
+def delete_lesson(request, lesson_id):
+    lesson = get_object_or_404(Lessons, id=lesson_id)
+    if request.user != lesson.creator:
+        return redirect('home')
+    if request.method == 'POST':
+        lesson.delete()
+        return redirect('home')
+    return render(request, 'exercises/delete_lesson.html')
