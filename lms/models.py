@@ -17,6 +17,7 @@ class Lessons(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     link = models.URLField(blank=True, null=True)
+    file_upload = models.FileField(blank=True, null=True, upload_to='media/files')
     image = models.ImageField(upload_to='images/%Y/%m/%d/', blank=True, null=True)
     video = models.FileField(upload_to='videos/%Y/%m/', null=True, blank=True,
                              validators=[

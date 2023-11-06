@@ -25,7 +25,10 @@ urlpatterns = [
     (template_name='users/password_reset_complete.html'), name='password_reset_complete'),
 
     path('new_lesson/', home.create_lesson, name='new_lesson'),
-    path('details_lesson/<int:lesson_id>', home.lesson_details, name='details_lesson')
+    path('details_lesson/<int:lesson_id>', home.lesson_details, name='details_lesson'),
+    path('edit_lesson/<int:lesson_id>', home.edit_lesson, name='edit_lesson'),
+    path('delete_lesson/<int:lesson_id>', home.delete_lesson, name='delete_lesson'),
+    path('home/<str:category>/', home.home, name='category_home'),
 
 ]
 if settings.DEBUG:

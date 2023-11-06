@@ -1,9 +1,14 @@
 {% include 'base.html' %}
+{% load static %}
 {% block content %}
 
+    {% if selected_category %}
+    <h2>Category: {{ selected_category }}</h2>
+{% endif %}
 
-<div class="row">
-    {% for lesson in lessons %}
+{% if lessons %}
+    <div class="row">
+        {% for lesson in lessons %}
         <div class="col-sm-6 col-lg-6" style="padding: 40px" >
             <div class="card d-flex flex-column" style="height: 350px">
 
@@ -22,14 +27,19 @@
                     <span class="avatar">{{ lesson.creator.first_name|first }} {{ lesson.creator.last_name|first }}</span>
                     <div class="ms-3">
                         <a href="#" class="text-body">Created By: {{ lesson.creator.first_name }} {{ lesson.creator.last_name }}</a>
-                        <div class="text-secondary">{{ lesson.created_at }}</div>
+                        <div class="text-secondary">Created {{ lesson.created_at|timesince }} ago</div>
+
                     </div>
                 </div>
             </div>
         </div>
         {% if forloop.counter|divisibleby:4 %}</div><div class="row">{% endif %}
     {% endfor %}
-</div>
+    </div>
+{% else %}
+    <p>No lessons found for the selected category.</p>
+{% endif %}
+
 
           <!-- Libs JS -->
     <script src="./dist/libs/apexcharts/dist/apexcharts.min.js?1695847769" defer=""></script>

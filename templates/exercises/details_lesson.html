@@ -1,5 +1,20 @@
+{% load static %}
 {% include 'base.html' %}
 {% block content %}
+  <style>
+
+    .icons {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+    }
+
+    .card {
+        margin-bottom: 20px;
+    }
+</style>
+
+    <div class="container">
     <div class="row">
     {% for lesson in lesson %}
         <div class="col-sm-12 col-lg-12" style="padding: 40px" >
@@ -8,31 +23,92 @@
                 <div class="card-body d-flex flex-column">
 
                     <h3 class="card-title"><a href="{% url 'details_lesson' lesson.id %}">{{ lesson.title }}</a></h3>
-                    <div class="text-secondary">{{ lesson.description}}</div>
+                    <div class="text-secondary">{{ lesson.description }}</div>
                 </div>
-              <a href="#">
-                    {% if lesson.image %}
+            <div class="icons">
+                {% if lesson.file_upload.url|lower|slice:'-4:' == ".pdf" %}
+                    <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
+                        <img src="{% static 'icons/pdf-icon.png' %}" alt="PDF Icon"
+                             class="file-icon"/>
+                    </a>
+                                {% elif lesson.file_upload.url|lower|slice:'-4:' == '.psd' %}
+                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                            <img src="{% static 'icons/default-psd.png' %}" alt="File Icon"
+                                                 class="file-icon"/> </a>
+                                    {% elif lesson.file_upload.url|lower|slice:'-5:' == '.xlsx' %}
+                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                            <img src="{% static 'icons/exel-default.png' %}" alt="File Icon"
+                                                 class="file-icon"/> </a>
+                                    {% elif lesson.file_upload.url|lower|slice:'-4:' == '.doc' %}
+                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                            <img src="{% static 'icons/default-word.png' %}" alt="File Icon"
+                                                 class="file-icon"/> </a>
+                                    {% elif lesson.file_upload.url|lower|slice:'-4:' == '.mp3' %}
+                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                            <img src="{% static 'icons/default-mp3.png' %}" alt="File Icon"
+                                                 class="file-icon"/> </a>
+                                    {% elif lesson.file_upload.url|lower|slice:'-4:' == '.zip' %}
+                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                            <img src="{% static 'icons/default-zip.png' %}" alt="File Icon"
+                                                 class="file-icon"/> </a>
+                                    {% elif lesson.file_upload.url|lower|slice:'-4:' == '.rar' %}
+                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                            <img src="{% static 'icons/default-rar.png' %}" alt="File Icon"
+                                                 class="file-icon"/> </a>
+                                    {% elif lesson.file_upload.url|upper|slice:'-4:' == '.MP4' %}
+                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                            <img src="{% static 'icons/default-video.png' %}" alt="File Icon"
+                                                 class="file-icon"/> </a>
+                                    {% elif lesson.file_upload.url|lower|slice:'-3:' == '.py' %}
+                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                            <img src="{% static 'icons/default-python.png' %}" alt="File Icon"
+                                                 class="file-icon"/> </a>
+                                    {% elif lesson.file_upload.url|lower|slice:'-3:' == '.js' %}
+                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                            <img src="{% static 'icons/default-JavaScript.png' %}" alt="File Icon"
+                                                 class="file-icon"/> </a>
+
+                                         {% elif lesson.file_upload.url|lower|slice:'-4:' == '.txt' %}
+                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                            <img src="{% static 'icons/default-Text.png' %}" class="file-icon"
+                                                 alt="File Icon"/>
+                                        </a>
+                                    {% endif %}
+                            </div>
+                {% if lesson.image %}
                     <img class="card-img-top" src="{{ lesson.image.url }}" alt=""/>
                 {% endif %}
-                </a>
-             {% if lesson.link %}
-                <a style="margin-left: 25px" href="{{ lesson.link }}">For more info Click here</a>
+
+
+                {% if lesson.link %}
+                    <a style="margin-left: 25px" href="{{ lesson.link }}">For more info Click here</a>
                 {% endif %}
                 <div class="d-flex align-items-start pt-4 mt-auto" style="margin: auto; padding-bottom: 10px">
                     <span class="avatar">{{ lesson.creator.first_name|first }} {{ lesson.creator.last_name|first }}</span>
                     <div class="ms-3">
                         <a href="#" class="text-body">Created By: {{ lesson.creator.first_name }} {{ lesson.creator.last_name }}</a>
                         <div class="text-secondary">{{ lesson.created_at }}</div>
+                       {% if user == lesson.creator %}
+                        <a style="margin: 10px" class="btn btn-primary btn-xs" href="{% url 'edit_lesson' lesson.id %}">Edit</a>
+                        <a class="btn btn-danger btn-xs" href="{% url 'delete_lesson' lesson.id %}">Delete</a>
+                    {% endif %}
+
                     </div>
                 </div>
             </div>
         </div>
         {% if forloop.counter|divisibleby:4 %}</div><div class="row">{% endif %}
+
     {% endfor %}
+
 </div>
+    </div>
 
-
-
+<script>
+    function openFile(url) {
+        window.open(url, "_blank");
+    }
+</script>
 
 
 {% endblock %}
