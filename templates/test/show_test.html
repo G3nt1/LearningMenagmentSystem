@@ -2,6 +2,7 @@
 {% include 'base.html' %}
 {% load static %}
 {% block content %}
-    <h1>{{ tests }}</h1>
-
+    {% for test in tests %}
+    <h1>{{ test.name }}</h1>
+    {% endfor %}
 {% endblock %}
