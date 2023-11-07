@@ -1,6 +1,6 @@
 from django import forms
 
-from lms.models import User, Lessons, Classroom
+from lms.models import User, Lessons, Category, Test
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -28,10 +28,16 @@ class LoginUserForm(forms.Form):
 class CreateLessonsForm(forms.ModelForm):
     class Meta:
         model = Lessons
-        fields = ('title', 'description', 'link', 'file_upload', 'image', 'video', 'classroom')
+        fields = ('title', 'description', 'link', 'file_upload', 'image', 'video', 'category')
 
 
 class CreateClassroomForm(forms.ModelForm):
     class Meta:
-        model = Classroom
+        model = Category
         fields = ('name',)
+
+
+class CreateTestForm(forms.ModelForm):
+    class Meta:
+        model = Test
+        fields = ('name', 'category')

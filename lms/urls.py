@@ -2,8 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
-from lms.views import home, userview
-
+from lms.views import home, userview, exercises
 
 urlpatterns = [
     path('', home.home, name='home'),
@@ -28,9 +27,12 @@ urlpatterns = [
     path('details_lesson/<int:lesson_id>', home.lesson_details, name='details_lesson'),
     path('edit_lesson/<int:lesson_id>', home.edit_lesson, name='edit_lesson'),
     path('delete_lesson/<int:lesson_id>', home.delete_lesson, name='delete_lesson'),
-    path('home/<str:classroom>/', home.home, name='classroom_home'),
+    path('home/<str:category_name>/', home.home, name='home'),
+
 
     path('create_classroom', home.create_classroom, name='create_classroom'),
+    path('create_test', exercises.create_test, name='create_test'),
+    path('tests', exercises.tests, name='tests'),
 
 ]
 if settings.DEBUG:

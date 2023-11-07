@@ -13,10 +13,8 @@
             <div class="card d-flex flex-column" style="height: 350px">
 
                 <div class="card-body d-flex flex-column">
-                    <div class="ribbon bg-red">{{ lesson.classroom }}</div>
-                    {% if lesson.created_at < 3 %}
-                    <div class="ribbon bg-blue">New</div>
-                    {% endif %}
+                    <div class="ribbon bg-red">{{ lesson.category }}</div>
+
                     <h3 class="card-title"><a href="{% url 'details_lesson' lesson.id %}">{{ lesson.title }}</a></h3>
                     <div class="text-secondary">{{ lesson.description|truncatechars:600 }}</div>
                 </div>

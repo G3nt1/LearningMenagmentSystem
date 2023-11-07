@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Classroom(models.Model):
+class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -23,7 +23,7 @@ class Lessons(models.Model):
     video = models.FileField(upload_to='videos/%Y/%m/', null=True, blank=True,
                              validators=[
                                  FileExtensionValidator(allowed_extensions=['MOV', 'avi', 'mp4', 'webm', 'mkv'])])
-    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -31,11 +31,11 @@ class Lessons(models.Model):
 
 
 class Test(models.Model):
-    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     max_points = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __set__(self):
-        return self.name, self.max_points, self.creator.first_name + self.creator.last_name
+        return self.name
