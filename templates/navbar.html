@@ -1,7 +1,8 @@
- <script src="./dist/js/demo-theme.min.js?1695847769"></script>
-    <div class="page">
-      <!-- Navbar -->
-      <header class="navbar navbar-expand-md navbar-overlap d-print-none" data-bs-theme="dark">
+
+<script src="./dist/js/demo-theme.min.js?1695847769"></script>
+
+
+      <header class="navbar navbar-expand-md navbar-overlap d-print-none"  data-bs-theme="{% if theme_mode == 'dark' %}dark{% else %}light{% endif %}">
         <div class="container-xl">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -13,6 +14,10 @@
           </h1>
           <div class="navbar-nav flex-row order-md-last">
             <div class="d-none d-md-flex">
+               <a href="?theme=light" class="nav-link px-0 hide-theme-light" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Enable light mode" data-bs-original-title="Enable light mode">
+                <!-- Download SVG icon from http://tabler-icons.io/i/sun -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path></svg>
+              </a>
               <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
                 <!-- Download SVG icon from http://tabler-icons.io/i/moon -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -178,14 +183,14 @@
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 4m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path><path d="M4 13m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path><path d="M14 4m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path><path d="M14 15m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path></svg>
                     </span>
                     <span class="nav-link-title">
-                     Category
+                     Classrooms
                     </span>
                   </a>
                   <div class="dropdown-menu">
                     <div class="dropdown-menu-columns">
                       <div class="dropdown-menu-column">
-                          {% for category in categories %}
-                        <a class="dropdown-item" href="{% url 'category_home' category%}">{{ category.name }}</a>
+                          {% for class in classroom %}
+                        <a class="dropdown-item" href="{% url 'category_home' class%}">{{ class.name }}</a>
 
 
                           {% endfor %}
@@ -271,4 +276,5 @@
             </div>
           </div>
         </div>
-
+      </div>
+    </div>

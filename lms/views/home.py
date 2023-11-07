@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from lms.models import Lessons, Category
+from lms.models import Lessons, Classroom
 from lms.forms import CreateLessonsForm
 from django.contrib.auth.decorators import login_required
 
@@ -7,16 +7,16 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def home(request, category=None):
-    categories = Category.objects.all()
+    classroom = Classroom.objects.all()
 
     if category:
-        lessons = Lessons.objects.filter(category__name=category).order_by('-created_at')
+        lessons = Lessons.objects.filter(classroom__name=classroom).order_by('-created_at')
     else:
         lessons = Lessons.objects.all().order_by('-created_at')
 
     user = request.user
     context = {
-        'categories': categories,
+        'classroom': classroom,
         'selected_category': category,
         'lessons': lessons,
         'user': user,

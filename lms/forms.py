@@ -28,7 +28,7 @@ class LoginUserForm(forms.Form):
 class CreateLessonsForm(forms.ModelForm):
     class Meta:
         model = Lessons
-        fields = ('title', 'description', 'link', 'file_upload', 'image', 'video', 'category')
+        fields = ('title', 'description', 'link', 'file_upload', 'image', 'video', 'classroom')
 
 
 

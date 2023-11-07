@@ -32,7 +32,7 @@
                              class="file-icon"/>
                     </a>
                                 {% elif lesson.file_upload.url|lower|slice:'-4:' == '.psd' %}
-                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                        <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
                                             <img src="{% static 'icons/default-psd.png' %}" alt="File Icon"
                                                  class="file-icon"/> </a>
                                     {% elif lesson.file_upload.url|lower|slice:'-5:' == '.xlsx' %}
@@ -40,36 +40,36 @@
                                             <img src="{% static 'icons/exel-default.png' %}" alt="File Icon"
                                                  class="file-icon"/> </a>
                                     {% elif lesson.file_upload.url|lower|slice:'-4:' == '.doc' %}
-                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                        <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
                                             <img src="{% static 'icons/default-word.png' %}" alt="File Icon"
                                                  class="file-icon"/> </a>
                                     {% elif lesson.file_upload.url|lower|slice:'-4:' == '.mp3' %}
-                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                        <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
                                             <img src="{% static 'icons/default-mp3.png' %}" alt="File Icon"
                                                  class="file-icon"/> </a>
                                     {% elif lesson.file_upload.url|lower|slice:'-4:' == '.zip' %}
-                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                        <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
                                             <img src="{% static 'icons/default-zip.png' %}" alt="File Icon"
                                                  class="file-icon"/> </a>
                                     {% elif lesson.file_upload.url|lower|slice:'-4:' == '.rar' %}
-                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                        <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
                                             <img src="{% static 'icons/default-rar.png' %}" alt="File Icon"
                                                  class="file-icon"/> </a>
                                     {% elif lesson.file_upload.url|upper|slice:'-4:' == '.MP4' %}
-                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                        <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
                                             <img src="{% static 'icons/default-video.png' %}" alt="File Icon"
                                                  class="file-icon"/> </a>
                                     {% elif lesson.file_upload.url|lower|slice:'-3:' == '.py' %}
-                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                        <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
                                             <img src="{% static 'icons/default-python.png' %}" alt="File Icon"
                                                  class="file-icon"/> </a>
                                     {% elif lesson.file_upload.url|lower|slice:'-3:' == '.js' %}
-                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                        <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
                                             <img src="{% static 'icons/default-JavaScript.png' %}" alt="File Icon"
                                                  class="file-icon"/> </a>
 
                                          {% elif lesson.file_upload.url|lower|slice:'-4:' == '.txt' %}
-                                        <a href="#" onclick="openFile('{{ file.file_upload.url }}')">
+                                        <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
                                             <img src="{% static 'icons/default-Text.png' %}" class="file-icon"
                                                  alt="File Icon"/>
                                         </a>
