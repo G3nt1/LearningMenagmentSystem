@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from lms.models import Lessons, Classroom
-from lms.forms import CreateLessonsForm
+from lms.forms import CreateLessonsForm, CreateClassroomForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -36,8 +36,8 @@ def create_lesson(request):
                 return redirect('home')
         else:
             form = CreateLessonsForm()
-            content = {'form': form}  # Include lessons in the content
-            return render(request, 'exercises/create_new_lesson.html', content)
+        content = {'form': form}  # Include lessons in the content
+        return render(request, 'lesson/create_new_lesson.html', content)
 
 
 def edit_lesson(request, lesson_id):
@@ -52,12 +52,12 @@ def edit_lesson(request, lesson_id):
     else:
         form = CreateLessonsForm(instance=lesson)
     content = {'form': form}  # Include lessons in the content
-    return render(request, 'exercises/edit_lesson.html', content)
+    return render(request, 'lesson/edit_lesson.html', content)
 
 
 def lesson_details(request, lesson_id):
     lesson = Lessons.objects.filter(id=lesson_id)
-    return render(request, 'exercises/details_lesson.html', {'lesson': lesson})
+    return render(request, 'lesson/details_lesson.html', {'lesson': lesson})
 
 
 def delete_lesson(request, lesson_id):
@@ -68,4 +68,17 @@ def delete_lesson(request, lesson_id):
         lesson.delete()
         return redirect('home')
 
-    return render(request, 'exercises/delete_lesson.html', {'lesson': lesson})
+    return render(request, 'lesson/delete_lesson.html', {'lesson': lesson})
+
+
+def create_classroom(request):
+    if request.method == 'POST':
+        form = CreateClassroomForm(request.POST)
+        if form.is_valid():
+            classroom = form.save(commit=False)
+            classroom.creator = request.user
+            classroom.save()
+            return redirect('home')
+    else:
+        form = CreateClassroomForm()
+        return render(request, 'lesson/create_classroom.html', {'form': form})

@@ -28,7 +28,9 @@ urlpatterns = [
     path('details_lesson/<int:lesson_id>', home.lesson_details, name='details_lesson'),
     path('edit_lesson/<int:lesson_id>', home.edit_lesson, name='edit_lesson'),
     path('delete_lesson/<int:lesson_id>', home.delete_lesson, name='delete_lesson'),
-    path('home/<str:category>/', home.home, name='category_home'),
+    path('home/<str:classroom>/', home.home, name='classroom_home'),
+
+    path('create_classroom', home.create_classroom, name='create_classroom'),
 
 ]
 if settings.DEBUG:

@@ -1,6 +1,6 @@
 from django import forms
 
-from lms.models import User, Lessons
+from lms.models import User, Lessons, Classroom
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -31,5 +31,7 @@ class CreateLessonsForm(forms.ModelForm):
         fields = ('title', 'description', 'link', 'file_upload', 'image', 'video', 'classroom')
 
 
-
-
+class CreateClassroomForm(forms.ModelForm):
+    class Meta:
+        model = Classroom
+        fields = ('name',)

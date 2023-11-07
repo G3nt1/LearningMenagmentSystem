@@ -169,7 +169,7 @@
                           .......
                         </a>
 
-                        <a class="dropdown-item" href="./page-loader.html">
+                        <a class="dropdown-item" href="{% url 'create_classroom' %}">
                           ......
                           <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">New</span>
                         </a>
@@ -188,9 +188,12 @@
                   </a>
                   <div class="dropdown-menu">
                     <div class="dropdown-menu-columns">
-                      <div class="dropdown-menu-column">
-                          {% for class in classroom %}
-                        <a class="dropdown-item" href="{% url 'category_home' class%}">{{ class.name }}</a>
+                              <div class="dropdown-menu-column">
+                                <a class="btn btn-info" style="background-color:#4299e1; color: white " href="{% url 'create_classroom' %}">
+                            Create new Classroom
+                          </a>
+                          {% for classroom in classroom %}
+                        <a class="dropdown-item" href="{% url 'classroom_home' classroom %}">{{ classroom.name }}</a>
 
 
                           {% endfor %}
