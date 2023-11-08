@@ -1,6 +1,6 @@
 from django import forms
 
-from lms.models import User, Lessons, Category, Test
+from lms.models import User, Lessons, Category, Test, Question
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -41,3 +41,9 @@ class CreateTestForm(forms.ModelForm):
     class Meta:
         model = Test
         fields = ('name', 'description', 'category')
+
+
+class CreateQuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ('name', 'points', 'test')

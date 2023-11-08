@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
+
 from lms.models import Test, Question
-from lms.forms import CreateTestForm
+from lms.forms import CreateTestForm, CreateQuestionForm
 
 
 # test /.................
@@ -16,10 +18,10 @@ def create_test(request):
             test = form.save(commit=False)
             test.creator = request.user
             test.save()
-            return redirect('home')
+            return redirect('tests')
     else:
         form = CreateTestForm()
-        return render(request, 'test/create_new_test.html', {"form": form})
+    return render(request, 'test/create_new_test.html', {"form": form})
 
 
 def edit_test(request, test_id):
@@ -54,3 +56,22 @@ def delete_test(request, test_id):
 def questions(request, test_id):
     question = get_object_or_404(Question, id=test_id)
     return render(request, 'question/show_question.html', {"question": question})
+
+
+def create_question(request, test_id):
+    test = get_object_or_404(Test, id=test_id)
+    questions = test.question_set.all()
+    if request.user != test.creator:
+        return redirect('home')
+
+    if request.method == 'POST':
+        form = CreateQuestionForm(request.POST)
+        form.instance.test_id = test_id
+
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+
+        form = CreateQuestionForm()
+        return render(request, 'question/create_question.html', {"form": form, "test": test, "questions": questions})

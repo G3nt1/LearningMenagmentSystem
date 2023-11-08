@@ -21,7 +21,7 @@
                     </div>
                     {% if test.creator == request.user %}
                         <div class="list-footer-display" style=" padding: 1px">
-                        <a href="{% url 'edit_test' test.id %}" class="btn btn-link">Create Questions </a>
+                        <a href="{% url 'create_question' test.id %}" class="btn btn-link">Create Questions </a>
                         <a href="{% url 'edit_test' test.id %}" class="btn btn-link">Edit</a>
                         <a style="color: red" href="{% url 'delete_test' test.id %}" class="btn btn-link">Delete</a>
                         </div>

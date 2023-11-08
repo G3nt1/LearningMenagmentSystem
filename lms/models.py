@@ -38,7 +38,7 @@ class Test(models.Model):
     max_points = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __set__(self):
+    def __str__(self):
         return self.name
 
 

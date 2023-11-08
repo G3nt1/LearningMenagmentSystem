@@ -36,7 +36,8 @@ urlpatterns = [
     path('delete_test/<int:test_id>', exercises.delete_test, name='delete_test'),
 
     # Questions
-    path('questions/<int:test_id>', exercises.questions, name='questions'),
+    path('questions/<int:test_id>/', exercises.questions, name='questions'),
+    path('create_question/<int:test_id>/', exercises.create_question, name='create_question'),
 
 ]
 if settings.DEBUG:
