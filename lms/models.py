@@ -40,3 +40,16 @@ class Test(models.Model):
 
     def __set__(self):
         return self.name
+
+
+class Questions(models.Model):
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    points = models.IntegerField(default=1)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+

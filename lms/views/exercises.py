@@ -45,3 +45,6 @@ def delete_test(request, test_id):
 
     return render(request, 'test/delete_test.html', {"test":test})
 
+
+
+
