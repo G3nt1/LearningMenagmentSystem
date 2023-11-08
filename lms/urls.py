@@ -33,6 +33,8 @@ urlpatterns = [
     path('create_classroom', home.create_classroom, name='create_classroom'),
     path('create_test', exercises.create_test, name='create_test'),
     path('tests', exercises.tests, name='tests'),
+    path('tests/<int:test_id>', exercises.edit_test, name='edit_test'),
+    path('delete_test/<int:test_id>', exercises.delete_test, name='delete_test')
 
 ]
 if settings.DEBUG:

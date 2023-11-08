@@ -21,8 +21,8 @@
                     </div>
                     {% if test.creator == request.user %}
                         <div class="list-footer-display" style="margin-left: 150px; padding: 1px">
-                        <a style="color: teal"  href="#" class="btn btn-link">Edit</a>
-                        <a style="color: red" href="#" class="btn btn-link">Delete</a>
+                        <a href="{% url 'edit_test' test.id %}" class="btn btn-link">Edit</a>
+                        <a style="color: red" href="{% url 'delete_test' test.id %}" class="btn btn-link">Delete</a>
                         </div>
                     {% endif %}
                 </div>

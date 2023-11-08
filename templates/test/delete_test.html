@@ -6,13 +6,13 @@
             <div class="col-lg-6">
                 <div class="card mt-5">
                     <div class="card-body">
-                         <h1 class="text-center" style="color: red">Are you sure you want to delete {{ lesson.title }}  ???</h1>
+                         <h1 class="text-center" style="color: red">Are you sure you want to delete {{ test.name }} ???</h1>
                         <div class="text-center">
-                          <form method="post" action="{% url 'delete_lesson'  lesson.id%}">
+                          <form method="post">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
-                            <a href="{% url 'details_lesson' lesson.id %}" class="btn btn-secondary btn-block mt-2">Cancel</a>
+                            <a href="{% url 'tests' %}" class="btn btn-secondary btn-block mt-2">Cancel</a>
                         </div>
                     </div>
                 </div>
