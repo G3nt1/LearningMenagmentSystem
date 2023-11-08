@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from lms.models import Test
+from lms.models import Test, Question
 from lms.forms import CreateTestForm
 
 
+# test /.................
 def tests(request):
     test = Test.objects.all()
     return render(request, 'test/show_test.html', {'tests': test})
@@ -43,8 +44,13 @@ def delete_test(request, test_id):
         test.delete()
         return redirect('tests')
 
-    return render(request, 'test/delete_test.html', {"test":test})
+    return render(request, 'test/delete_test.html', {"test": test})
 
 
+# end test
+# #########
+# Questions  /////...............
 
-
+def questions(request, test_id):
+    question = get_object_or_404(Question, id=test_id)
+    return render(request, 'question/show_question.html', {"question": question})
