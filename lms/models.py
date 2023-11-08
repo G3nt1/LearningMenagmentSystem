@@ -42,7 +42,7 @@ class Test(models.Model):
         return self.name
 
 
-class Questions(models.Model):
+class Question(models.Model):
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     points = models.IntegerField(default=1)
@@ -53,3 +53,12 @@ class Questions(models.Model):
         return self.name
 
 
+class Options(models.Model):
+    question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
+    text = models.CharField(max_length=255)
+    is_correct = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.text
