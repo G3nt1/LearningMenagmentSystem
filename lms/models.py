@@ -34,6 +34,7 @@ class Test(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, max_length=255, null=True)
     max_points = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 

@@ -40,4 +40,4 @@ class CreateClassroomForm(forms.ModelForm):
 class CreateTestForm(forms.ModelForm):
     class Meta:
         model = Test
-        fields = ('name', 'category')
+        fields = ('name', 'description', 'category')
