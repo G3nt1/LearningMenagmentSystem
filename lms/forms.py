@@ -1,6 +1,7 @@
 from django import forms
+from django.forms import modelformset_factory
 
-from lms.models import User, Lessons, Category, Test, Question
+from lms.models import User, Lessons, Category, Test, Question, Options
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -46,4 +47,17 @@ class CreateTestForm(forms.ModelForm):
 class CreateQuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ('name', 'points', 'test')
+        fields = ('name', 'points')
+
+
+class CreateOptionForm(forms.ModelForm):
+    class Meta:
+        model = Options
+        fields = ['text', 'is_correct']
+
+
+CreateOptionFormSet = modelformset_factory(
+    Options,
+    form=CreateOptionForm,
+    extra=5,
+)

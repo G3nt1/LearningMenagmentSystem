@@ -1,8 +1,9 @@
+from django.db.models.options import Options
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-
+from django.forms import modelformset_factory
 from lms.models import Test, Question
-from lms.forms import CreateTestForm, CreateQuestionForm
+from lms.forms import CreateTestForm, CreateQuestionForm, CreateOptionForm, CreateOptionFormSet
 
 
 # test /.................
@@ -55,12 +56,12 @@ def delete_test(request, test_id):
 
 def questions(request, test_id):
     question = get_object_or_404(Question, id=test_id)
-    return render(request, 'question/show_question.html', {"question": question})
+    return render(request, 'question/show_question.html', test_id, {"question": question})
 
 
 def create_question(request, test_id):
     test = get_object_or_404(Test, id=test_id)
-    questions = test.question_set.all()
+    questions = Question.objects.filter(test__name=test.name)
     if request.user != test.creator:
         return redirect('home')
 
@@ -69,9 +70,29 @@ def create_question(request, test_id):
         form.instance.test_id = test_id
 
         if form.is_valid():
-            form.save()
-            return redirect('home')
+            new_question = form.save()
+            return redirect('create_options', question_id=new_question.id)
     else:
 
         form = CreateQuestionForm()
         return render(request, 'question/create_question.html', {"form": form, "test": test, "questions": questions})
+
+
+# ...
+
+def create_options(request, question_id):
+    question = get_object_or_404(Question, id=question_id)
+    test = question.test
+
+    if request.method == 'POST':
+        formset = CreateOptionFormSet(request.POST)
+        if formset.is_valid():
+            instances = formset.save(commit=False)
+            for instance in instances:
+                instance.question_id = question_id
+                instance.save()
+            return redirect('tests')
+    else:
+        formset = CreateOptionFormSet()
+
+    return render(request, 'question/create_options.html', {'formset': formset, 'question': question, 'test': test})

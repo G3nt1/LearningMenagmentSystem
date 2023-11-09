@@ -2,12 +2,66 @@
 {% include 'base.html' %}
 {% load crispy_forms_filters %}
 {% block content %}
-    <div class="container" style="padding: 150px">
-    <h1 style="text-align: center">Create Question</h1>
-<form method="post" action="{% url 'create_question' test.id %}">
-    {% csrf_token %}
-    {{ form | crispy }}
-    <button type="submit" class="btn btn-info">Create</button>
-</form>
-</div>
+ <div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="text-center">Create Question for test: {{ test.name }}</h1>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'create_question' test.id %}">
+                        {% csrf_token %}
+                        {{ form | crispy }}
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-info">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+ <div class="col-sm-6 col-lg-8">
+<table class="table">
+  <thead>
+    <tr>
+      <th>Question</th>
+      <th>Points</th>
+      <th>Options</th>
+      <th>Answers</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for question in questions %}  {# Use the filtered questions here #}
+      <tr>
+        <td>{{ question.name }}</td>
+        <td>{{ question.points }} points</td>
+        <td>
+          <ul class="list-unstyled">
+            {% for option in question.options.all %}
+              <li>
+                <h4>{{ option.text }}</h4>
+              </li>
+            {% endfor %}
+          </ul>
+        </td>
+        <td>
+          <ul class="list-unstyled">
+            {% for option in question.options.all %}
+              <li style="padding: 2px">
+                {% if option.is_correct %}
+                  <span class="badge bg-success">Correct</span>
+                {% else %}
+                  <span class="badge bg-danger">Incorrect</span>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+    </div>
+ </div>
 {% endblock %}

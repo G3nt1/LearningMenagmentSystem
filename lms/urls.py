@@ -38,6 +38,8 @@ urlpatterns = [
     # Questions
     path('questions/<int:test_id>/', exercises.questions, name='questions'),
     path('create_question/<int:test_id>/', exercises.create_question, name='create_question'),
+    path('create_options/<int:question_id>/', exercises.create_options, name='create_options'),
+
 
 ]
 if settings.DEBUG:
