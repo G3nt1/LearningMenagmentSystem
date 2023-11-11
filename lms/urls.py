@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
-from lms.views import home, userview, exercises
+from lms.views import home, userview, exercises, answers
 
 urlpatterns = [
     path('', home.home, name='home'),
@@ -39,6 +39,10 @@ urlpatterns = [
     path('questions/<int:test_id>/', exercises.questions, name='questions'),
     path('create_question/<int:test_id>/', exercises.create_question, name='create_question'),
     path('create_options/<int:question_id>/', exercises.create_options, name='create_options'),
+
+    # Answers
+    path('answers/<int:test_id>', answers.show_answers, name='answers'),
+    path('submit_answer/<int:test_id>', answers.submit_answer, name='submit_answer'),
 
 
 ]

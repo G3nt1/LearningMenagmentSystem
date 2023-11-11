@@ -1,0 +1,15 @@
+{% load crispy_forms_filters %}
+{% include 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+
+    {{ answers.user.first_name }}
+    {{ answers.user.last_name }}
+        {{ answers.question }}
+        {{ answers.answer}}
+        {{ answers.answer.is_correct}}
+        {{ answers.points_earned }}Points
+
+</div>
+{% endblock %}

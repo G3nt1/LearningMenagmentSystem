@@ -1,9 +1,7 @@
-from django.db.models.options import Options
+
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
-from django.forms import modelformset_factory
+from lms.forms import CreateTestForm, CreateQuestionForm, CreateOptionFormSet
 from lms.models import Test, Question
-from lms.forms import CreateTestForm, CreateQuestionForm, CreateOptionForm, CreateOptionFormSet
 
 
 # test /.................
