@@ -62,3 +62,24 @@ class Options(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class UserAnswer(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Options, on_delete=models.CASCADE)
+    is_correct = models.BooleanField(default=False)
+    points_earned = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if self.is_correct:
+            self.points_earned = self.question.points
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.question.name}: {self.answer.text}"
+
+    class Meta:
+        unique_together = ('user', 'test', 'question')

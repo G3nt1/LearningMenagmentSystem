@@ -93,6 +93,6 @@ def create_options(request, question_id):
                 instance.save()
             return redirect('tests')
     else:
-        formset = CreateOptionFormSet()
+        formset = CreateOptionFormSet(initial=[{'question_id': question_id}])
 
     return render(request, 'question/create_options.html', {'formset': formset, 'question': question, 'test': test})
