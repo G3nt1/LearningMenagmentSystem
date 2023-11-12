@@ -110,22 +110,3 @@ def create_options(request, question_id):
         formset = CreateOptionFormSet(initial=[{'question_id': question_id}])
 
     return render(request, 'question/create_options.html', {'formset': formset, 'question': question, 'test': test})
-
-#
-# def edit_options(request, question_id):
-#     question = get_object_or_404(Question, id=question_id)
-#     test = question.test
-#     options = Options.objects.filter(question__id=question_id)
-#
-#     if request.method == 'POST':
-#         formset = CreateOptionFormSet(request.POST, instance=options)
-#         if formset.is_valid():
-#             instances = formset.save(commit=False)
-#             for instance in instances:
-#                 instance.question_id = question_id
-#                 instance.save()
-#             return redirect('tests')
-#     else:
-#         formset = CreateOptionFormSet(initial=[{'question_id': question_id}], instance=options)
-#
-#     return render(request, 'question/create_options.html', {'formset': formset, 'question': question, 'test': test})

@@ -84,5 +84,4 @@ class UserAnswer(models.Model):
     class Meta:
         unique_together = ('user', 'test', 'question')
 
-    class Meta:
-        unique_together = ('user', 'test', 'question')
+
