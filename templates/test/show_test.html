@@ -15,20 +15,20 @@
                 <a href="#" class="text-body">Created By: {{ test.creator.first_name }} {{ test.creator.last_name }}</a>
                 <div class="text-secondary">Created {{ test.created_at|timesince }} ago</div>
                 <div class="card-footer">
-
                     {% if test.creator == request.user %}
-                        <div class="list-footer-display" style=" padding: 1px">
-                        <a  class="btn btn-info ms-auto" href="{% url 'create_question' test.id %}" class="btn btn-link">Create Questions </a>
-                        <a href="{% url 'edit_test' test.id %}" class="btn btn-link">Edit</a>
-                        <a style="color: red" href="{% url 'delete_test' test.id %}" class="btn btn-link">Delete</a>
+                        <div class="list-footer-display" style="padding: 1px">
+                            <a class="btn btn-info ms-auto" href="{% url 'create_question' test.id %}"
+                               class="btn btn-link">Create Questions</a>
+                            <a href="{% url 'edit_test' test.id %}" class="btn btn-link">Edit</a>
+                            <a style="color: red" href="{% url 'delete_test' test.id %}" class="btn btn-link">Delete</a>
                         </div>
-                        {% else %}
-                          <div class="d-flex">
-
-{#                        <a href="#" class="btn btn-link">Cancel</a>#}
-                        <a href="{% url 'submit_answer' test.id %}" class="btn btn-outline-primary ms-auto">Make this test</a>
-                    </div>
+                    {% else %}
+                        <div class="d-flex">
+                              <a href="{% url 'submit_answer' test.id %}" class="btn btn-outline-primary ms-auto">Make
+                                  this test</a>
+                      </div>
                     {% endif %}
+
                 </div>
             </div>
         </div>
