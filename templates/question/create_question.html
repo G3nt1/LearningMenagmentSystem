@@ -2,6 +2,12 @@
 {% include 'base.html' %}
 {% load crispy_forms_filters %}
 {% block content %}
+     {% if question_exists %}
+                        <div class="alert alert-danger" role="alert">
+                            <h4 class="alert-title">Error!</h4>
+                            <div class="text-secondary">Question with this name already exists!</div>
+                        </div>
+                    {% endif %}
  <div class="container">
     <div class="row">
         <div class="col-sm-6 col-lg-4">
@@ -44,6 +50,7 @@
             {% for option in question.options.all %}
               <li>
                 <h4>{{ option.text | truncatechars:60 }}</h4>
+
               </li>
             {% endfor %}
           </ul>

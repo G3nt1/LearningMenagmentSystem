@@ -59,7 +59,7 @@ def questions(request, test_id):
 
 def create_question(request, test_id):
     test = get_object_or_404(Test, id=test_id)
-    questions = Question.objects.filter(test__name=test.name)
+    question = Question.objects.filter(test__name=test.name)
     if request.user != test.creator:
         return redirect('home')
 
@@ -73,7 +73,7 @@ def create_question(request, test_id):
     else:
 
         form = CreateQuestionForm()
-        return render(request, 'question/create_question.html', {"form": form, "test": test, "questions": questions})
+        return render(request, 'question/create_question.html', {"form": form, "test": test, "questions": question})
 
 
 def edit_question(request, question_id):
@@ -93,13 +93,12 @@ def edit_question(request, question_id):
 
 
 # ...  Options
-
 def create_options(request, question_id):
     question = get_object_or_404(Question, id=question_id)
-    test = question.test
+    test = question.test  # Assuming Test has a ForeignKey to Question
 
     if request.method == 'POST':
-        formset = CreateOptionFormSet(request.POST)
+        formset = CreateOptionFormSet(request.POST, queryset=Options.objects.none())
         if formset.is_valid():
             instances = formset.save(commit=False)
             for instance in instances:
@@ -107,6 +106,25 @@ def create_options(request, question_id):
                 instance.save()
             return redirect('create_question', test_id=test.id)
     else:
-        formset = CreateOptionFormSet(initial=[{'question_id': question_id}])
+        formset = CreateOptionFormSet(queryset=Options.objects.none())
 
-    return render(request, 'question/create_options.html', {'formset': formset, 'question': question, 'test': test})
+    return render(request, 'question/create_options.html', {'formset': formset, 'question': question})
+
+
+def edit_options(request, question_id):
+    question = get_object_or_404(Question, id=question_id)
+    test = question.test  # Assuming Test has a ForeignKey to Question
+
+    if request.method == 'POST':
+        formset = CreateOptionFormSet(request.POST, queryset=Options.objects.none(), instance=question)
+        if formset.is_valid():
+            instances = formset.save(commit=False)
+            for instance in instances:
+                instance.question_id = question_id
+                instance.save()
+            return redirect('create_question', test_id=test.id)
+    else:
+        formset = CreateOptionFormSet(queryset=Options.objects.none(), instance=question)
+
+    return render(request, 'question/create_options.html', {'formset': formset, 'question': question})
+

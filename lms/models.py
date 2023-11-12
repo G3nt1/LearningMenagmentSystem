@@ -44,7 +44,7 @@ class Test(models.Model):
 
 class Question(models.Model):
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     points = models.IntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -55,7 +55,7 @@ class Question(models.Model):
 
 class Options(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
-    text = models.CharField(max_length=255)
+    text = models.CharField(max_length=255, unique=True)
     is_correct = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
