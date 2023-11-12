@@ -1,0 +1,16 @@
+{% load crispy_forms_filters %}
+{% include 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container" style="padding: 150px">
+    <h1 style="text-align: center">Edit Options</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form | crispy }}
+
+        <button type="submit" class="btn btn-info">Edit</button>
+    </form>
+    </div>
+
+
+{% endblock %}

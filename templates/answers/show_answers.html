@@ -1,15 +1,120 @@
-{% load crispy_forms_filters %}
-{% include 'base.html' %}
-{% load static %}
+  <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
 {% block content %}
-<div class="container">
+      <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #e2e8f0;
+        }
 
-    {{ answers.user.first_name }}
-    {{ answers.user.last_name }}
-        {{ answers.question }}
-        {{ answers.answer}}
-        {{ answers.answer.is_correct}}
-        {{ answers.points_earned }}Points
+        .container {
+            margin: 160px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-</div>
+        .back-btn {
+            margin: 10px;
+        }
+
+        .test-info {
+            color: #495057;
+        }
+
+        .card-lg {
+            margin-top: 20px;
+        }
+
+        .user-card {
+            background-color: #e2e8f0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .user-card-body {
+            padding: 20px;
+        }
+
+        .user-details {
+            color: #495057;
+        }
+
+        .result-table {
+            margin-top: 20px;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 10px;
+            }
+
+            .card-lg {
+                margin-top: 10px;
+            }
+
+            .user-card {
+                margin-bottom: 10px;
+            }
+
+            .table th,
+            .table td {
+                padding: 8px;
+            }
+        }
+    </style>
+
+
+<body>
+    <div class="container">
+        <a href="{% url 'home' %}" class="btn btn-outline-success back-btn">Back to Home</a>
+        <h1 style="color: #495057;">Test Results</h1>
+        <h2 class="test-info">Test Creator: {{ test.creator.first_name }} {{ test.creator.last_name }} {{ test.creator }}</h2>
+
+        {% for user_result in user_results %}
+        <div class="card card-lg user-card">
+            <div class="card-body user-card-body">
+                <h1 class="card-title user-details">User: {{ user_result.user.first_name }} {{ user_result.user.last_name }} (<a href="#" class="text-reset">{{ user_result.user.email }}</a>)</h1>
+                <p class="card-text user-details">Maximum Points: {{ user_result.max_points }}</p>
+                <p class="card-text user-details">Points Earned: {{ user_result.total_points }}</p>
+                <p class="card-text user-details">Percentage: {{ user_result.percentage|floatformat:0 }} %</p>
+            </div>
+        </div>
+
+        <table class="table result-table">
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Your Answer</th>
+                    <th>Is Correct</th>
+                    <th>Points Question</th>
+                    <th>Points Earn</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user_answer in user_result.user_answers %}
+                <tr>
+                    <td>{{ user_answer.question }}</td>
+                    <td>{{ user_answer.answer }}</td>
+                    <td style="color: {% if user_answer.answer.is_correct %}teal{% else %}red{% endif %}">
+                        {% if user_answer.answer.is_correct %}Correct{% else %}Incorrect{% endif %}
+                    </td>
+                    <td style="color: darkblue">{{ user_answer.question.points }}</td>
+                    <td style="color: {% if user_answer.answer.is_correct %}teal{% else %}red{% endif %}">
+                        {% if user_answer.answer.is_correct %} {{ user_answer.question.points }} {% else %} 0 {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endfor %}
+    </div>
 {% endblock %}

@@ -26,21 +26,24 @@
   <thead>
     <tr>
       <th>Question</th>
+        <th>Edit</th>
       <th>Points</th>
       <th>Options</th>
       <th>Answers</th>
+        <th>Edit</th>
     </tr>
   </thead>
   <tbody>
     {% for question in questions%}  {# Use the filtered questions here #}
       <tr>
         <td>{{ question.name }}</td>
+         <td><a class="badge bg-primary" href="{% url 'edit_question' question.id %}">Edit</a> </td>
         <td>{{ question.points }} points</td>
         <td>
           <ul class="list-unstyled">
             {% for option in question.options.all %}
               <li>
-                <h4>{{ option.text }}</h4>
+                <h4>{{ option.text | truncatechars:60 }}</h4>
               </li>
             {% endfor %}
           </ul>
@@ -58,10 +61,12 @@
             {% endfor %}
           </ul>
         </td>
+          <td><a class="badge bg-primary" href="">Edit</a></td>
       </tr>
     {% endfor %}
   </tbody>
 </table>
     </div>
  </div>
+     </div>
 {% endblock %}

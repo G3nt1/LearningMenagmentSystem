@@ -68,7 +68,7 @@ class UserAnswer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answer = models.ForeignKey(Options, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Options, on_delete=models.CASCADE, null=True)  # Allow null values
     is_correct = models.BooleanField(default=False)
     points_earned = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -84,3 +84,5 @@ class UserAnswer(models.Model):
     class Meta:
         unique_together = ('user', 'test', 'question')
 
+    class Meta:
+        unique_together = ('user', 'test', 'question')

@@ -3,7 +3,7 @@
 {% load crispy_forms_filters %}
 {% block content %}
     <div class="container" style="padding: 150px">
-    <h1 style="text-align: center">Create Options for Question {{ question.name }}</h1>
+    <h1 style="text-align: center">Create Options for Question:  {{ question.name }}</h1>
 <form method="post" action="{% url 'create_options' question.id %}">
     {% csrf_token %}
     {{ formset | crispy }}

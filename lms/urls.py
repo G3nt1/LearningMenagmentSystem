@@ -39,10 +39,12 @@ urlpatterns = [
     path('questions/<int:test_id>/', exercises.questions, name='questions'),
     path('create_question/<int:test_id>/', exercises.create_question, name='create_question'),
     path('create_options/<int:question_id>/', exercises.create_options, name='create_options'),
+    path('edit_question/<int:question_id>/', exercises.edit_question, name='edit_question'),
+    # path('edit_options/<int:question_id>/', exercises.edit_options, name='edit_options'),
 
     # Answers
     path('answers/<int:test_id>', answers.show_answers, name='answers'),
-    path('submit_answer/<int:test_id>', answers.submit_answer, name='submit_answer'),
+    path('submit_answer/<int:test_id>', answers.submit_answers, name='submit_answer'),
 
 
 ]
