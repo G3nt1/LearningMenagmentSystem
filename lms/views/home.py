@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from lms.models import Lessons, LessonCategory
-from lms.forms import CreateLessonsForm, CreateClassroomForm
+from lms.models import Lessons, LessonCategory, TestCategory
+from lms.forms import CreateLessonsForm, CreateClassroomForm, CreateTestCategoryForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -20,8 +20,25 @@ def home(request, category_name=None):
         'lessons': lessons,
         'user': user,
     }
+
     return render(request, 'home.html', context)
 
+
+# def test_category(request, category_name):
+#     category = TestCategory.objects.all()
+#     if category_name:
+#         tests = TestCategory.objects.filter(name=category_name).order_by('-created_at')
+#     else:
+#         tests = TestCategory.objects.all().order_by('-created_at')
+#
+#     user = request.user
+#     context = {
+#         'category': category_name,
+#         'selected_category': category,
+#         'tests': tests,
+#         'user': user,
+#     }
+#     return render(request, 'test/show_test.html', context)
 
 
 @login_required
@@ -82,3 +99,17 @@ def create_classroom(request):
     else:
         form = CreateClassroomForm()
         return render(request, 'lesson/create_classroom.html', {'form': form})
+
+
+def create_test_category(request):
+    if request.method == 'POST':
+        form = CreateTestCategoryForm(request.POST)
+        if form.is_valid():
+            category = form.save(commit=False)
+            category.creator = request.user
+            category.save()
+            return redirect('home')
+    else:
+        form = CreateTestCategoryForm()  # Use the correct form here
+        test_categories = TestCategory.objects.all()  # Get all test categories
+        return render(request, 'test/create_test_category.html', {'form': form, 'test_categories': test_categories})

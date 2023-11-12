@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import modelformset_factory
 
-from lms.models import User, Lessons, LessonCategory, Test, Question, Options
+from lms.models import User, Lessons, LessonCategory, Test, Question, Options, TestCategory
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -37,6 +37,12 @@ class CreateClassroomForm(forms.ModelForm):
         model = LessonCategory
         fields = ('name',)
 
+
+class CreateTestCategoryForm(forms.ModelForm):
+
+    class Meta:
+        model = TestCategory
+        fields = ('name',)
 
 class CreateTestForm(forms.ModelForm):
     class Meta:
