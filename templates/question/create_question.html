@@ -8,7 +8,7 @@
                             <div class="text-secondary">Question with this name already exists!</div>
                         </div>
                     {% endif %}
- <div class="container">
+ <div class="flex-container" style="padding: 20px">
     <div class="row">
         <div class="col-sm-6 col-lg-4">
             <div class="card">
@@ -43,7 +43,7 @@
     {% for question in questions%}  {# Use the filtered questions here #}
       <tr>
         <td>{{ question.name }}</td>
-         <td><a class="badge bg-primary" href="{% url 'edit_question' question.id %}">Edit</a> </td>
+         <td><a class="badge bg-info" href="{% url 'edit_question' question.id %}">Edit Questions</a> </td>
         <td>{{ question.points }} points</td>
         <td>
           <ul class="list-unstyled">
@@ -68,7 +68,7 @@
             {% endfor %}
           </ul>
         </td>
-          <td><a class="badge bg-primary" href="">Edit</a></td>
+          <td><a class="badge bg-info" href="{% url 'edit_options' question.id %}">Edit Options</a></td>
       </tr>
     {% endfor %}
   </tbody>

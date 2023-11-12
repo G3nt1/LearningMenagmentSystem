@@ -4,12 +4,15 @@
 {% block content %}
     <div class="container" style="padding: 150px">
     <h1 style="text-align: center">Edit Options</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form | crispy }}
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    {% for form in formset %}
+        {{ form|crispy }}
+    {% endfor %}
+   <button type="submit" class="btn btn-info">Edit Options</button>
+</form>
 
-        <button type="submit" class="btn btn-info">Edit</button>
-    </form>
     </div>
 
 

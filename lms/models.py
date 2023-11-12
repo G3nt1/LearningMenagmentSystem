@@ -1,6 +1,7 @@
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 
 # Create your models here.
@@ -42,10 +43,15 @@ class Test(models.Model):
         return self.name
 
 
+def validate_non_negative(value):
+    if value < 1:
+        raise ValidationError("Points cannot be a negative value.")
+
+
 class Question(models.Model):
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, unique=True)
-    points = models.IntegerField(default=1)
+    points = models.IntegerField(default=1, validators=[validate_non_negative])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -55,7 +61,7 @@ class Question(models.Model):
 
 class Options(models.Model):
     question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
-    text = models.CharField(max_length=255, unique=True)
+    text = models.CharField(max_length=255)
     is_correct = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -83,5 +89,3 @@ class UserAnswer(models.Model):
 
     class Meta:
         unique_together = ('user', 'test', 'question')
-
-

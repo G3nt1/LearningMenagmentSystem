@@ -1,6 +1,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
-
+{% load static %}
 {% block content %}
 <style>
 .card {
@@ -17,28 +17,36 @@
     <div class="page-main">
         <div class="container mt-5">
             <h1 style="padding: 10px; text-align: center">{{ test.name }}</h1>
-            <form method="post">
-                {% csrf_token %}
-                {% for question in questions %}
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h2 class="card-title">{{ question.name }} -- {{ question.points }} Points</h2>
-                        <ul class="list-unstyled">
-                            {% for option in question.options.all %}
-                            <li>
-                                <label class="form-check">
-                                    <input class="form-check-input" type="radio" name="question_{{ question.id }}" value="{{ option.id }}">
-                                    <span class="form-check-label">{{ option.text }}</span>
-                                </label>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-                {% endfor %}
-                <button  type="submit" class="btn btn-outline-teal">Submit</button>
-            </form>
+
+            {% if questions %}
+                <form method="post">
+                    {% csrf_token %}
+                    {% for question in questions %}
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">{{ question.name }} -- {{ question.points }} Points</h2>
+                                <ul class="list-unstyled">
+                                    {% for option in question.options.all %}
+                                        <li>
+                                            <label class="form-check">
+                                                <input class="form-check-input" type="radio" name="question_{{ question.id }}" value="{{ option.id }}">
+                                                <span class="form-check-label">{{ option.text }}</span>
+                                            </label>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-outline-teal">Submit</button>
+                </form>
+            {% else %}
+              <h1 style="text-align: center; padding-top: 250px; color: red;">This Test {{ test.name }} is Empty</h1>
+
+
+            {% endif %}
         </div>
     </div>
-     </div>
+</div>
+
    {% endblock %}

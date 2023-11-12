@@ -116,15 +116,18 @@ def edit_options(request, question_id):
     test = question.test  # Assuming Test has a ForeignKey to Question
 
     if request.method == 'POST':
-        formset = CreateOptionFormSet(request.POST, queryset=Options.objects.none(), instance=question)
+        formset = CreateOptionFormSet(request.POST, queryset=Options.objects.filter(question_id=question_id))
         if formset.is_valid():
             instances = formset.save(commit=False)
             for instance in instances:
-                instance.question_id = question_id
+                instance.question = question  # Assign the question directly
                 instance.save()
+            formset.save_m2m()  # Save many-to-many relationships
             return redirect('create_question', test_id=test.id)
     else:
-        formset = CreateOptionFormSet(queryset=Options.objects.none(), instance=question)
+        formset = CreateOptionFormSet(queryset=Options.objects.filter(question_id=question_id))
 
-    return render(request, 'question/create_options.html', {'formset': formset, 'question': question})
+    return render(request, 'question/edit_options.html', {'formset': formset, 'question': question})
+
+
 
