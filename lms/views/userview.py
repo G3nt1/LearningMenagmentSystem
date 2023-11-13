@@ -1,19 +1,26 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
-from lms.forms import CreateUserForm, LoginUserForm
+from lms.forms import CreateUserForm, LoginUserForm, ProfileUserForm
 
 
 def register_user(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
-        if form.is_valid():
+        profile = ProfileUserForm(request.POST, request.FILES)
+
+        if form.is_valid() and form.is_valid():
             user = form.save(commit=False)
             user.username = form.cleaned_data['email']
             user.save()
+
+            profile = profile.save(commit=False)
+            profile.username = user
+            profile.save()
             return redirect('login')
     else:
         form = CreateUserForm()
-    context = {'form': form}
+        profile = ProfileUserForm()
+    context = {'form': form, 'profile': profile}
 
     return render(request, 'users/register.html', context)
 

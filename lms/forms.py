@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import modelformset_factory
-
-from lms.models import User, Lessons, Classrooms, Test, Question, Options
+from django_countries.fields import CountryField
+from lms.models import User, Lessons, Classrooms, Test, Question, Options, ProfileUser
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -13,6 +13,24 @@ class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'password1', 'password2')
+
+
+class ProfileUserForm(forms.ModelForm):
+    class Meta:
+        model = ProfileUser
+        fields = ('phone_number', 'address', 'city', 'country', 'birth_date', 'photo')
+
+        widgets = {
+            'birth_date': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+
+class CreateUserAndProfileForm(UserCreationForm, ProfileUserForm):
+    country = CountryField().formfield()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields.update(ProfileUserForm(self.data).fields)
 
 
 class LoginUserForm(forms.Form):
@@ -36,8 +54,6 @@ class CreateClassroomForm(forms.ModelForm):
     class Meta:
         model = Classrooms
         fields = ('name',)
-
-
 
 
 class CreateTestForm(forms.ModelForm):
