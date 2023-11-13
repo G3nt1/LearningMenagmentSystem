@@ -2,78 +2,140 @@
 {% include 'base.html' %}
 {% load crispy_forms_filters %}
 {% block content %}
-     {% if question_exists %}
-                        <div class="alert alert-danger" role="alert">
-                            <h4 class="alert-title">Error!</h4>
-                            <div class="text-secondary">Question with this name already exists!</div>
-                        </div>
-                    {% endif %}
- <div class="flex-container" style="padding: 20px">
-    <div class="row">
-        <div class="col-sm-6 col-lg-4">
-            <div class="card">
-                <div class="card-header">
-                    <h1 class="text-center">Create Question for test: {{ test.name }}</h1>
-                </div>
-                <div class="card-body">
-                    <form method="post" action="{% url 'create_question' test.id %}">
-                        {% csrf_token %}
-                        {{ form | crispy }}
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-info">Create</button>
-                        </div>
-                    </form>
+    {% if question_exists %}
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-title">Error!</h4>
+            <div class="text-secondary">Question with this name already exists!</div>
+        </div>
+    {% endif %}
+    <div class="flex-container" style="padding: 20px">
+        <div class="row">
+            <div class="col-sm-6 col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="text-center">Create Question for test: {{ test.name }}</h1>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="{% url 'create_question' test.id %}">
+                            {% csrf_token %}
+                            {{ form | crispy }}
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-info">Create</button>
+                                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">
+                                    Finish The Test
+                                </button>
+
+                                <div class="modal" id="exampleModal" tabindex="-1">
+                                    <div class="modal-dialog modal-sm" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            <div class="modal-status bg-success"></div>
+                                            <div class="modal-body text-center py-4">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     class="icon mb-2 text-green icon-lg" width="24" height="24"
+                                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                     fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                    <circle cx="12" cy="12" r="9"/>
+                                                    <path d="M9 12l2 2l4 -4"/>
+                                                </svg>
+                                                <h3>Test Complete</h3>
+                                                <div class="text-secondary">Are you sure you want to finish this
+                                                    test???.
+                                                </div>
+                                            </div>
+                                            <!-- Inside your modal -->
+                                            <div class="modal-footer">
+                                                <div class="w-100">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <a href="javascript:void(0);" onclick="goBack()"
+                                                               class="btn w-100" data-bs-dismiss="modal">
+                                                                Go Back
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a href="javascript:void(0);" onclick="finishTest()"
+                                                               class="btn btn-success w-100" data-bs-dismiss="modal">
+                                                                Finish the test
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <script>
+                                                function goBack() {
+                                                    // JavaScript function to handle going back
+                                                   window.location.href = "{% url 'create_question' test.id %}";
+                                                }
+
+                                                function finishTest() {
+                                                    // JavaScript function to handle finishing the test
+                                                    window.location.href = "{% url 'tests' %}";
+                                                }
+                                            </script>
+
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                        </form>
+                    </div>
                 </div>
             </div>
+
+            <div class="col-sm-6 col-lg-8">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Question</th>
+                        <th>Edit</th>
+                        <th>Points</th>
+                        <th>Options</th>
+                        <th>Answers</th>
+                        <th>Edit</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for question in questions %}  {# Use the filtered questions here #}
+                        <tr>
+                            <td>{{ question.name }}</td>
+                            <td><a class="badge bg-info" href="{% url 'edit_question' question.id %}">Edit Questions</a>
+                            </td>
+                            <td>{{ question.points }} points</td>
+                            <td>
+                                <ul class="list-unstyled">
+                                    {% for option in question.options.all %}
+                                        <li>
+                                            <h4>{{ option.text | truncatechars:60 }}</h4>
+
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="list-unstyled">
+                                    {% for option in question.options.all %}
+                                        <li style="padding: 2px">
+                                            {% if option.is_correct %}
+                                                <span class="badge bg-success">Correct</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">Incorrect</span>
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td><a class="badge bg-info" href="{% url 'edit_options' question.id %}">Edit Options</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-
- <div class="col-sm-6 col-lg-8">
-<table class="table">
-  <thead>
-    <tr>
-      <th>Question</th>
-        <th>Edit</th>
-      <th>Points</th>
-      <th>Options</th>
-      <th>Answers</th>
-        <th>Edit</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for question in questions%}  {# Use the filtered questions here #}
-      <tr>
-        <td>{{ question.name }}</td>
-         <td><a class="badge bg-info" href="{% url 'edit_question' question.id %}">Edit Questions</a> </td>
-        <td>{{ question.points }} points</td>
-        <td>
-          <ul class="list-unstyled">
-            {% for option in question.options.all %}
-              <li>
-                <h4>{{ option.text | truncatechars:60 }}</h4>
-
-              </li>
-            {% endfor %}
-          </ul>
-        </td>
-        <td>
-          <ul class="list-unstyled">
-            {% for option in question.options.all %}
-              <li style="padding: 2px">
-                {% if option.is_correct %}
-                  <span class="badge bg-success">Correct</span>
-                {% else %}
-                  <span class="badge bg-danger">Incorrect</span>
-                {% endif %}
-              </li>
-            {% endfor %}
-          </ul>
-        </td>
-          <td><a class="badge bg-info" href="{% url 'edit_options' question.id %}">Edit Options</a></td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
     </div>
- </div>
-     </div>
 {% endblock %}

@@ -1,17 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from lms.forms import CreateTestForm, CreateQuestionForm, CreateOptionFormSet, CreateOptionForm
-from lms.models import Test, Question, Options, TestCategory
+from lms.models import Test, Question, Options, Classrooms
 from django.forms import modelformset_factory
 
 
 # test /.................
 def tests(request, category_name=None):
     test = Test.objects.all()
-    category = TestCategory.objects.all()
+    category = Classrooms.objects.all()
     if category_name:
-        tests = TestCategory.objects.filter(name=category_name).order_by('-created_at')
+        tests = Classrooms.objects.filter(name=category_name).order_by('-created_at')
     else:
-        tests = TestCategory.objects.all().order_by('-created_at')
+        tests = Classrooms.objects.all().order_by('-created_at')
 
     user = request.user
     context = {

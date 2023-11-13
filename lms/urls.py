@@ -31,7 +31,6 @@ urlpatterns = [
     path('test/<str:category_name>/', exercises.tests, name='test'),
 
     path('create_classroom', home.create_classroom, name='create_classroom'),
-    path('create_category_test', home.create_test_category, name='create_test_category'),
     path('create_test', exercises.create_test, name='create_test'),
     path('tests', exercises.tests, name='tests'),
     path('tests/<int:test_id>', exercises.edit_test, name='edit_test'),

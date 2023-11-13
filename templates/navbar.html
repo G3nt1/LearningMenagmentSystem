@@ -2,7 +2,7 @@
 
 
 <header class="navbar navbar-expand-md navbar-overlap d-print-none"
-        data-bs-theme="{% if theme_mode == 'dark' %}dark{% else %}light{% endif %}">
+        data-bs-theme="dark">
     <div class="container-xl">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu"
                 aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
@@ -228,10 +228,6 @@
                         <div class="dropdown-menu">
                             <div class="dropdown-menu-columns">
                                 <div class="dropdown-menu-column">
-                                    <a class="btn btn-info" style="background-color: #0ca678; color: white "
-                                       href="{% url 'create_test_category' %}">
-                                        Create Test Category
-                                    </a>
 
                                     <a href="{% url 'create_test' %}" class="btn btn-primary">
                                         Create new Test

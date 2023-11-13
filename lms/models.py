@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 
 # Create your models here.
 
-class LessonCategory(models.Model):
+class Classrooms(models.Model):
     name = models.CharField(max_length=255, unique=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -25,24 +25,15 @@ class Lessons(models.Model):
     video = models.FileField(upload_to='videos/%Y/%m/', null=True, blank=True,
                              validators=[
                                  FileExtensionValidator(allowed_extensions=['MOV', 'avi', 'mp4', 'webm', 'mkv'])])
-    category = models.ForeignKey(LessonCategory, on_delete=models.CASCADE)
+    category = models.ForeignKey(Classrooms, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
 
 
-class TestCategory(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.name
-
-
 class Test(models.Model):
-    category = models.ForeignKey(TestCategory, on_delete=models.CASCADE)
+    category = models.ForeignKey(Classrooms, on_delete=models.CASCADE)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, max_length=255, null=True)
