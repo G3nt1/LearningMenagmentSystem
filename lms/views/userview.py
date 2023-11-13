@@ -1,6 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect, get_object_or_404
 from lms.forms import CreateUserForm, LoginUserForm, ProfileUserForm
+from lms.models import ProfileUser
 
 
 def register_user(request):
@@ -45,3 +47,10 @@ def login_user(request):
 def userLogout(request):
     logout(request)
     return redirect('login')
+
+
+def profile(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    profile_user = ProfileUser.objects.get(username=request.user)
+
+    return render(request, 'users/profile.html', {'user': user, 'profile': profile_user})

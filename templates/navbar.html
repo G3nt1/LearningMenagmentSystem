@@ -1,3 +1,5 @@
+
+
 <script src="./dist/js/demo-theme.min.js?1695847769"></script>
 
 
@@ -181,7 +183,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-theme="dark">
                     <a href="#" class="dropdown-item">Status</a>
-                    <a href="./profile.html" class="dropdown-item">Profile</a>
+                    <a href="{% url 'profile' user.id %}" class="dropdown-item">Profile</a>
                     <a href="#" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
                     <a href="./settings.html" class="dropdown-item">Settings</a>
@@ -229,7 +231,7 @@
                             <div class="dropdown-menu-columns">
                                 <div class="dropdown-menu-column">
 
-                                    <a href="{% url 'create_test' %}" class="btn btn-primary">
+                                    <a href="{% url 'create_test' %}" class="btn" style="background-color: #0ca678 ; color: white" >
                                         Create new Test
                                     </a>
 
@@ -271,9 +273,9 @@
                                     <a href="{% url 'new_lesson' %}" class="btn btn-info">
                                         Create New Lesson
                                     </a>
-{#                                    {% for category in selected_category %}#}
-{#                                        <a class="dropdown-item" href="{% url 'home' category %}">{{ category }}</a>#}
-{#                                    {% endfor %}#}
+                                    {% for category in selected_category %}
+                                        <a class="dropdown-item" href="{% url 'home' category %}">{{ category }}</a>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
@@ -294,45 +296,45 @@
     </div>
 </header>
 <div class="page-wrapper">
-{#    <!-- Page header -->#}
-{#    <div class="page-header d-print-none text-white">#}
-{#        <div class="container-xl">#}
-{#            <div class="row g-2 align-items-center">#}
-{#                <div class="col">#}
-{#                    <!-- Page pre-title -->#}
-{#                    <div class="page-pretitle">#}
-{##}
-{#                    </div>#}
-{#                    <h2 class="page-title">#}
-{##}
-{#                    </h2>#}
-{#                </div>#}
-{#                <!-- Page title actions -->#}
-{#                <div class="col-auto ms-auto d-print-none">#}
-{#                    <div class="btn-list">#}
-{#                  <span class="d-none d-sm-inline">#}
-{#                    <a href="{% url 'new_lesson' %}" class="btn btn-info">#}
-{#                      Create New Lesson#}
-{#                    </a>#}
-{#                  </span>#}
-{#                        <a href="{% url 'create_test' %}" class="btn btn-primary">#}
-{#                            Create new Test#}
-{#                        </a>#}
-{#                        <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"#}
-{#                           data-bs-target="#modal-report" aria-label="Create new report">#}
-{#                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->#}
-{#                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"#}
-{#                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"#}
-{#                                 stroke-linecap="round" stroke-linejoin="round">#}
-{#                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>#}
-{#                                <path d="M12 5l0 14"></path>#}
-{#                                <path d="M5 12l14 0"></path>#}
-{#                            </svg>#}
-{#                        </a>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#</div>#}
+    <!-- Page header -->
+    <div class="page-header d-print-none text-white">
+        <div class="container-xl">
+            <div class="row g-2 align-items-center">
+                <div class="col">
+                    <!-- Page pre-title -->
+                    <div class="page-pretitle">
+
+                    </div>
+                    <h2 class="page-title">
+
+                    </h2>
+                </div>
+                <!-- Page title actions -->
+                <div class="col-auto ms-auto d-print-none">
+                    <div class="btn-list">
+                  <span class="d-none d-sm-inline">
+                    <a href="{% url 'new_lesson' %}" class="btn btn-info">
+                      Create New Lesson
+                    </a>
+                  </span>
+                        <a href="{% url 'create_test' %}" class="btn btn-primary">
+                            Create new Test
+                        </a>
+                        <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
+                           data-bs-target="#modal-report" aria-label="Create new report">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M12 5l0 14"></path>
+                                <path d="M5 12l14 0"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
    {% endif %}

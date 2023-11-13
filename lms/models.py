@@ -14,6 +14,7 @@ class ProfileUser(models.Model):
     country = CountryField(blank=True, null=True)
     birth_date = models.DateField(blank=True, null=True)
     photo = models.ImageField(upload_to='profile_pics', blank=True, null=True)
+    bio = models.TextField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.username.first_name
