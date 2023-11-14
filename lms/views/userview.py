@@ -53,7 +53,9 @@ def profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
     profile_user = ProfileUser.objects.get(username=request.user)
 
-    return render(request, 'users/profile.html', {'user': user, 'profile': profile_user})
+    return render(request, 'users/profile.html', {'user': user,
+                                                  'profile': profile_user,
+                                                  })
 
 
 def edit_profile(request, user_id):
@@ -81,4 +83,3 @@ def edit_profile(request, user_id):
     context = {'form': form, 'profile_form': profile_form, 'user_id': user_id}
 
     return render(request, 'users/edit_profile.html', context)
-
