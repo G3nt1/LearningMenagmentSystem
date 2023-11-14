@@ -54,3 +54,31 @@ def profile(request, user_id):
     profile_user = ProfileUser.objects.get(username=request.user)
 
     return render(request, 'users/profile.html', {'user': user, 'profile': profile_user})
+
+
+def edit_profile(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    profile = get_object_or_404(ProfileUser, username_id=user_id)
+
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST, instance=user)
+        profile_form = ProfileUserForm(request.POST, request.FILES, instance=profile)
+
+        if form.is_valid() and profile_form.is_valid():
+            user = form.save(commit=False)
+            user.username = form.cleaned_data['email']
+            user.save()
+
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
+
+            return redirect('login')  # Change 'profile' to the appropriate URL for viewing profiles
+    else:
+        form = CreateUserForm(instance=user)
+        profile_form = ProfileUserForm(instance=profile)
+
+    context = {'form': form, 'profile_form': profile_form, 'user_id': user_id}
+
+    return render(request, 'users/edit_profile.html', context)
+

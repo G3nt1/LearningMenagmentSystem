@@ -1,70 +1,62 @@
 {% include 'base.html' %}
 {% block content %}
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
 
-    .profile-container {
-      max-width: 600px;
-      margin: 50px auto;
-      background-color: #fff;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+    <style>
+        body {
+            background-color: #f0f2f5;
+        }
+        .card {
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .card .card-body {
+            padding: 20px;
+        }
+        .card .card-body img {
+            width: 100%;
+            height: auto;
+        }
 
-    .profile-header {
-      background-color: #3498db;
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .profile-img {
-      border-radius: 50%;
-      width: 250px;
-      height: 250px;
-      object-fit: cover;
-      margin-bottom: 20px;
-    }
-
-    .profile-info {
-      padding: 20px;
-    }
-
-    .profile-info h2 {
-      margin-bottom: 10px;
-    }
-
-    .profile-info p {
-      margin: 5px 0;
-    }
-  </style>
+        .card .card-body h4 {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .card .card-body p {
+            margin-bottom: 20px;
+        }
+        .card .card-body ul {
+            padding: 0;
+            list-style: none;
+        }
+        .card .card-body ul li {
+            margin-bottom: 10px;
+        }
+        .card .card-body ul li i {
+            margin-right: 10px;
+        }
+    </style>
 <body>
-
-  <div class="profile-container">
-    <div class="profile-header">
-
-      <img class="profile-img" src="{{ profile.photo.url }}" alt="Profile Image">
-      <h2>{{ user.first_name }}  {{ user.last_name|upper }}</h2>
-        <p><strong>Birthday:</strong> {{ profile.birth_date }}</p>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="{{ profile.photo.url}}" alt="Profile Image" class="img-fluid">
+                        <h2>{{ user.first_name}} {{ user.last_name|upper }}</h2>
+                        <p>{{ user.email}}</p>
+                        <ul>
+                            <li><i class="bi bi-geo-alt-fill">Address: </i> {{ profile.address}}</li>
+                            <li><i class="bi bi-envelope-fill">City: </i> {{ profile.city}}</li>
+                             <li><i class="bi bi-phone-fill">Country: </i> {{ profile.country.name}}</li>
+                            <li><i class="bi bi-phone-fill">Phone: </i> {{ profile.phone_number }}</li>
+                             <li><i class="bi bi-phone-fill">Bio: </i> {{ profile.bio }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="profile-info">
-         <p><strong>Email: </strong> {{ user.email }}</p>
-         <p><strong>Phone: </strong> {{ profile.phone_number }}</p>
-          <p><strong>Address: </strong>{{ profile.address}}</p>
-          <p><strong>City: </strong> {{ profile.city }}</p>
-          <p><strong>Country: </strong> {{ profile.country }}</p>
-
-        <p><strong>Bio: </strong> {{ profile.bio }}</p>
-
-    </div>
-  </div>
-</body>>
-
 {% endblock %}
