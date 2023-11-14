@@ -182,10 +182,10 @@
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-theme="dark">
-                    <a href="#" class="dropdown-item">Status</a>
+                    <a href="#" class="dropdown-item">All my tests</a>
                     <a href="{% url 'profile' user.id %}" class="dropdown-item">Profile</a>
-                    <a href="#" class="dropdown-item">Feedback</a>
-                    <div class="dropdown-divider"></div>
+{#                    <a href="#" class="dropdown-item">Feedback</a>#}
+{#                    <div class="dropdown-divider"></div>#}
                     <a href="{% url 'edit_profile' user.id %}" class="dropdown-item">Settings</a>
                     <a href="{% url 'logout' %}" class="dropdown-item">Logout</a>
                 </div>
@@ -313,13 +313,13 @@
                 <div class="col-auto ms-auto d-print-none">
                     <div class="btn-list">
                   <span class="d-none d-sm-inline">
-                    <a href="{% url 'new_lesson' %}" class="btn btn-info">
-                      Create New Lesson
-                    </a>
+{#                    <a href="{% url 'new_lesson' %}" class="btn btn-info">#}
+{#                      Create New Lesson#}
+{#                    </a>#}
                   </span>
-                        <a href="{% url 'create_test' %}" class="btn btn-primary">
-                            Create new Test
-                        </a>
+{#                        <a href="{% url 'create_test' %}" class="btn btn-primary">#}
+{#                            Create new Test#}
+{#                        </a>#}
                         <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
                            data-bs-target="#modal-report" aria-label="Create new report">
                             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->

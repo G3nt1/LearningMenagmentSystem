@@ -1,25 +1,22 @@
 {% include 'base.html' %}
 {% block content %}
-
-
     <style>
         body {
             background-color: #f0f2f5;
         }
         .card {
             background-color: #fff;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
             overflow: hidden;
         }
         .card .card-body {
-            padding: 20px;
+            padding: 30px;
         }
         .card .card-body img {
             width: 100%;
             height: auto;
         }
-
         .card .card-body h4 {
             margin-top: 10px;
             margin-bottom: 10px;
@@ -33,30 +30,38 @@
         }
         .card .card-body ul li {
             margin-bottom: 10px;
+             padding: 25px;
         }
         .card .card-body ul li i {
             margin-right: 10px;
         }
     </style>
-<body>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <img src="{{ profile.photo.url}}" alt="Profile Image" class="img-fluid">
-                        <h2>{{ user.first_name}} {{ user.last_name|upper }}</h2>
-                        <p>{{ user.email}}</p>
-                        <ul>
-                            <li><i class="bi bi-geo-alt-fill">Address: </i> {{ profile.address}}</li>
-                            <li><i class="bi bi-envelope-fill">City: </i> {{ profile.city}}</li>
-                             <li><i class="bi bi-phone-fill">Country: </i> {{ profile.country.name}}</li>
-                            <li><i class="bi bi-phone-fill">Phone: </i> {{ profile.phone_number }}</li>
-                             <li><i class="bi bi-phone-fill">Bio: </i> {{ profile.bio }}</li>
-                        </ul>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4" style="padding: 20px">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="{{ profile.photo.url}}" alt="Profile Image" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8" style="padding: 20px">
+                    <div class="card">
+                        <div class="card-body" >
+                            <h1>{{ user.first_name}} {{ user.last_name|upper }}</h1>
+                            <h3>{{ user.email}}</h3>
+                            <ul>
+                                <li><i class="bi bi-geo-alt-fill">Address: </i> {{ profile.address}}</li>
+                                <li><i class="bi bi-envelope-fill">City: </i> {{ profile.city}}</li>
+                                <li><i class="bi bi-phone-fill">Country: </i> {{ profile.country.name}}</li>
+                                <li><i class="bi bi-phone-fill">Phone: </i> {{ profile.phone_number }}</li>
+                                <li><i class="bi bi-phone-fill">Bio: </i> {{ profile.bio }}</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </body>
 {% endblock %}
