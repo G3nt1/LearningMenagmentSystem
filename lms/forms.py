@@ -59,7 +59,7 @@ class CreateClassroomForm(forms.ModelForm):
 class CreateTestForm(forms.ModelForm):
     class Meta:
         model = Test
-        fields = ('name', 'description', 'category')
+        fields = ('name', 'description', 'category','users', )
 
 
 class CreateQuestionForm(forms.ModelForm):

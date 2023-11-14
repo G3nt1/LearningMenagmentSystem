@@ -53,6 +53,7 @@ class Test(models.Model):
     description = models.TextField(blank=True, max_length=255, null=True)
     max_points = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
+    users = models.ManyToManyField(User, related_name='tests', blank=True)
 
     def __str__(self):
         return self.name
@@ -67,6 +68,7 @@ class Question(models.Model):
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, unique=True)
     points = models.IntegerField(default=1, validators=[validate_non_negative])
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
