@@ -39,6 +39,7 @@ def edit_test(request, test_id):
             test = form.save(commit=False)
             test.creator = request.user
             test.save()
+            form.save_m2m()
             return redirect('tests')
     else:
         form = CreateTestForm(instance=test)
