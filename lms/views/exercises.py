@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from lms.forms import CreateTestForm, CreateQuestionForm, CreateOptionFormSet, CreateOptionForm
 from lms.models import Test, Question, Options, Classrooms
@@ -5,21 +6,13 @@ from django.forms import modelformset_factory
 
 
 # test /.................
-def tests(request, category_name=None):
-    test = Test.objects.all()
-    category = Classrooms.objects.all()
-    if category_name:
-        tests = Classrooms.objects.filter(name=category_name).order_by('-created_at')
-    else:
-        tests = Classrooms.objects.all().order_by('-created_at')
+def tests(request):
+    test = Test.objects.filter(Q
+                               (creator=request.user)
+                               | Q(users=request.user)).distinct()
 
-    user = request.user
     context = {
-        'category': category_name,
-        'selected_category': category,
-        'tests': tests,
-        'test':test,
-        'user': user,
+        'tests': test,
     }
     return render(request, 'test/show_test.html', context)
 
@@ -31,6 +24,7 @@ def create_test(request):
             test = form.save(commit=False)
             test.creator = request.user
             test.save()
+            form.save_m2m()  # Save the many-to-many relationships
             return redirect('tests')
     else:
         form = CreateTestForm()
@@ -142,6 +136,3 @@ def edit_options(request, question_id):
         formset = CreateOptionFormSet(queryset=Options.objects.filter(question_id=question_id))
 
     return render(request, 'question/edit_options.html', {'formset': formset, 'question': question})
-
-
-

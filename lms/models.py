@@ -8,7 +8,7 @@ from django_countries.fields import CountryField
 # Create your models here.
 class ProfileUser(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=11, blank=True, null=True)
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=255, blank=True, null=True)
     country = CountryField(blank=True, null=True)
@@ -61,6 +61,8 @@ class Test(models.Model):
 
 def validate_non_negative(value):
     if value < 1:
+        raise ValidationError("Points cannot be a negative value.")
+    elif value > 10:
         raise ValidationError("Points cannot be a negative value.")
 
 

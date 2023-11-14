@@ -31,7 +31,6 @@ urlpatterns = [
     path('edit_lesson/<int:lesson_id>', home.edit_lesson, name='edit_lesson'),
     path('delete_lesson/<int:lesson_id>', home.delete_lesson, name='delete_lesson'),
     path('home/<str:category_name>/', home.home, name='home'),
-    path('test/<str:category_name>/', exercises.tests, name='test'),
 
     path('create_classroom', home.create_classroom, name='create_classroom'),
     path('create_test', exercises.create_test, name='create_test'),

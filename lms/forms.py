@@ -18,7 +18,7 @@ class CreateUserForm(UserCreationForm):
 class ProfileUserForm(forms.ModelForm):
     class Meta:
         model = ProfileUser
-        fields = ('phone_number', 'address', 'city', 'country', 'birth_date', 'photo')
+        fields = ('phone_number', 'address', 'city', 'country', 'birth_date', 'photo', 'bio')
 
         widgets = {
             'birth_date': forms.DateInput(attrs={'type': 'date'}),
@@ -59,7 +59,11 @@ class CreateClassroomForm(forms.ModelForm):
 class CreateTestForm(forms.ModelForm):
     class Meta:
         model = Test
-        fields = ('name', 'description', 'category','users', )
+        fields = ('name', 'description', 'category', 'users',)
+
+    def __init__(self, *args, **kwargs):
+        super(CreateTestForm, self).__init__(*args, **kwargs)
+        self.fields['users'].label_from_instance = lambda obj: "%s %s" % (obj.first_name, obj.last_name)
 
 
 class CreateQuestionForm(forms.ModelForm):

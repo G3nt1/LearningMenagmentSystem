@@ -2,45 +2,43 @@
 {% include 'base.html' %}
 {% load static %}
 {% block content %}
-    {% if test %}
-
-        <div class="row">
-            {% for test in test %}
-                <div class="col-sm-6 col-lg-3" style="padding: 40px">
-                    <div class="card d-flex flex-column" style="height: 350px">
-                        <div class="ribbon bg-teal">{{ test.category }}</div>
-                        <div class="card-body d-flex flex-column">
-                            <h3 class="card-title">{{ test.name }}</h3>
-                            <div class="text-secondary">{{ test.description }}</div>
-                        </div>
-                        <div class="ms-3">
-                            <a href="#" class="text-body">Created
-                                By: {{ test.creator.first_name }} {{ test.creator.last_name }}</a>
-                            <div class="text-secondary">Created  :{{ test.created_at|timesince }} ago</div>
-                            <div class="card-footer">
-                                {% if test.creator == request.user %}
-                                    <div class="list-footer-display" style="padding: 1px">
-                                        <a class="btn btn-info ms-auto" href="{% url 'create_question' test.id %}"
-                                           class="btn btn-link">Create Questions</a>
-                                        <a href="{% url 'edit_test' test.id %}" class="btn btn-link">Edit</a>
-                                        <a style="color: red" href="{% url 'delete_test' test.id %}"
-                                           class="btn btn-link">Delete</a>
-                                    </div>
-                                {% else %}
-                                    <div class="d-flex">
-                                        <a href="{% url 'submit_answer' test.id %}"
-                                           class="btn btn-outline-primary ms-auto">Make
-                                            this test</a>
-                                    </div>
-                                {% endif %}
-
-                            </div>
+{% if tests %}
+    <div class="row">
+        {% for test in tests %}
+            <div class="col-sm-6 col-lg-3" style="padding: 40px">
+                <div class="card d-flex flex-column" style="height: 350px">
+                {% if request.user != test.creator %}
+                    <div class="ribbon bg-orange">{{ test.category }}</div>
+                {% else %}
+                 <div class="ribbon bg-cyan">{{ test.category }}</div>
+                {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title">{{ test.name }}</h3>
+                        <div class="text-secondary">{{ test.description }}</div>
+                    </div>
+                    <div class="ms-3">
+                        <a href="#" class="text-body">Created By: {{ test.creator.first_name }} {{ test.creator.last_name }}</a>
+                        <div class="text-secondary">Created: {{ test.created_at|timesince }} ago</div>
+                        <div class="card-footer">
+                            {% if test.creator == request.user %}
+                                <div class="list-footer-display" style="padding: 1px">
+                                    <a class="btn btn-info ms-auto" href="{% url 'create_question' test.id %}" class="btn btn-link">Create Questions</a>
+                                    <a href="{% url 'edit_test' test.id %}" class="btn btn-link">Edit</a>
+                                    <a style="color: red" href="{% url 'delete_test' test.id %}" class="btn btn-link">Delete</a>
+                                </div>
+                            {% else %}
+                                <div class="d-flex">
+                                    <a href="{% url 'submit_answer' test.id %}" class="btn btn-outline-primary ms-auto">Make this test</a>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
-    {% else %}
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+
     <div class="empty">
   <div class="empty-icon">
     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
