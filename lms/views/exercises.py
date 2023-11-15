@@ -101,6 +101,15 @@ def edit_question(request, question_id):
         return render(request, 'question/edit_question.html', {"form": form, "test": test})
 
 
+def delete_question(request, question_id):
+    question = get_object_or_404(Question, id=question_id)
+    test = question.test
+    if request.method == 'POST':
+        question.delete()
+        return redirect('create_question', test_id=test.id)
+    return render(request, 'question/delete_question.html', {"question": question})
+
+
 # ...  Options
 def create_options(request, question_id):
     question = get_object_or_404(Question, id=question_id)

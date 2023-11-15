@@ -44,6 +44,7 @@ urlpatterns = [
     path('create_options/<int:question_id>/', exercises.create_options, name='create_options'),
     path('edit_question/<int:question_id>/', exercises.edit_question, name='edit_question'),
     path('edit_options/<int:question_id>/', exercises.edit_options, name='edit_options'),
+    path('delete_question/<int:question_id>/', exercises.delete_question, name='delete_question'),
 
     # Answers
     path('answers/<int:test_id>', answers.show_answers, name='answers'),

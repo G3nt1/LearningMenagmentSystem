@@ -1,4 +1,4 @@
-from django.core.validators import FileExtensionValidator
+from django.core.validators import FileExtensionValidator, MaxValueValidator, MinValueValidator
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -59,18 +59,11 @@ class Test(models.Model):
         return self.name
 
 
-def validate_non_negative(value):
-    if value < 1:
-        raise ValidationError("Points cannot be a negative value.")
-    elif value > 10:
-        raise ValidationError("Points cannot be a negative value.")
-
-
 class Question(models.Model):
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, unique=True)
-    points = models.IntegerField(default=1, validators=[validate_non_negative])
-
+    points = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)], default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

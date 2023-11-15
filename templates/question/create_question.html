@@ -104,6 +104,7 @@
                         <tr>
                             <td>{{ question.name }}</td>
                             <td><a class="badge bg-info" href="{% url 'edit_question' question.id %}">Edit Questions</a>
+                                <a class="badge bg-danger" href="{% url 'delete_question' question.id %}">Delete Questions</a>
                             </td>
                             <td>{{ question.points }} points</td>
                             <td>

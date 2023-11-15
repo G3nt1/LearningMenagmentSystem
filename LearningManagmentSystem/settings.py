@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
 
+    "debug_toolbar",
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -66,6 +68,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -139,7 +142,9 @@ USE_I18N = True
 USE_TZ = True
 
 INTERNAL_IPS = [
-    '127.0.0.1',  # Add any other IP addresses or IP ranges as needed
+
+    "127.0.0.1",
+
 ]
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'

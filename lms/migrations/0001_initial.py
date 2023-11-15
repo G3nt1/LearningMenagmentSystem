@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255, unique=True)),
-                ('points', models.IntegerField(default=1, validators=[lms.models.validate_non_negative])),
+                ('points', models.IntegerField(default=1)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('test', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='lms.test')),
