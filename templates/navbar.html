@@ -287,12 +287,15 @@
             </div>
         </div>
           <div class="mb-3"  style="padding-top: 14px; margin-right: 14px">
-
+                      <form  method="get" action="{% url 'search' %}" autocomplete="off">
                     <div class="input-icon">
-                        <input type="text" value="" class="form-control form-control-rounded" placeholder="Search…"/>
+                        <input type="text" name="query" value="" class="form-control form-control-rounded" placeholder="Search for test and lessons"
+                           aria-label="Search in website" style="color: black">
                         <span class="input-icon-addon">
                             </span>
                     </div>
+
+                        </form>
                 </div>
     </div>
 </header>

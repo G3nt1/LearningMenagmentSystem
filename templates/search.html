@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        font-family: sans-serif;
+    }
+
+    .container-fluid {
+        margin-top: 20px; /* Adjust the margin as needed */
+    }
+
+    .card {
+        margin-top: 20px; /* Adjust the margin as needed */
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="text-center mb-4">You Search for {{ query }}</h1>
+            {% if lessons %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <ul class="list-group">
+                        {% for lesson in lessons %}
+                        <a href="{% url 'details_lesson' lesson.id %}" style="color: black">
+                            <li class="list-group-item">{{ lesson.title }}</li>
+                        </a>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% elif tests %}
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <ul class="list-group">
+                        {% for test in tests %}
+                        <a href="{% url 'tests' %}"><li class="list-group-item">{{ test.name }}</li></a>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+                {% else %}
+                   <div class="empty">
+                  <div class="empty-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <circle cx="12" cy="12" r="9" />
+                      <line x1="9" y1="10" x2="9.01" y2="10" />
+                      <line x1="15" y1="10" x2="15.01" y2="10" />
+                      <path d="M9.5 15.25a3.5 3.5 0 0 1 5 0" />
+                    </svg>
+                  </div>
+                  <p class="empty-title">this  {{ query }}  is not found</p>
+                  <p class="empty-subtitle text-secondary">
+                    Please write search for something else
+                  </p>
+
+    </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

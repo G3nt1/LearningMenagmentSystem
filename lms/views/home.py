@@ -85,3 +85,6 @@ def create_classroom(request):
         form = CreateClassroomForm()
         return render(request, 'lesson/create_classroom.html', {'form': form})
 
+
+
+# def search(request):

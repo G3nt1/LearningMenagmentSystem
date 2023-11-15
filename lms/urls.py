@@ -51,6 +51,10 @@ urlpatterns = [
     path('submit_answer/<int:test_id>', answers.submit_answers, name='submit_answer'),
 
 
+
+    path('search', exercises.search, name='search'),
+
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

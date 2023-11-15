@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 
 from lms.forms import CreateTestForm, CreateQuestionForm, CreateOptionFormSet
-from lms.models import Test, Question, Options
+from lms.models import Test, Question, Options, Lessons
 
 
 # test /.................
@@ -146,3 +146,25 @@ def edit_options(request, question_id):
         formset = CreateOptionFormSet(queryset=Options.objects.filter(question_id=question_id))
 
     return render(request, 'question/edit_options.html', {'formset': formset, 'question': question})
+
+
+def search(request):
+    query = request.GET.get('query')
+    if query:
+        result_lessons = Lessons.objects.filter(
+            Q(title__icontains=query) |  Q(creator__username__icontains=query)
+        )
+        result_tests = Test.objects.filter(
+            Q(name__icontains=query) | Q(creator__username__icontains=query)
+        )
+    else:
+        result_lessons = []
+        result_tests = []
+
+    return render(request, 'search.html', {
+        'query': query,
+        'lessons': result_lessons,
+        'tests': result_tests,
+    })
+
+
