@@ -184,9 +184,9 @@
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-theme="dark">
 
 
-                    <a href="{% url 'profile' user.id %}" class="dropdown-item">Profile</a>
-{#                    <a href="#" class="dropdown-item">Feedback</a>#}
-{#                    <div class="dropdown-divider"></div>#}
+
+                    <a href="{% url 'display_tests' %}" class="dropdown-item">View your tests</a>
+                     <a href="{% url 'profile' user.id %}" class="dropdown-item">Profile</a>
                     <a href="{% url 'edit_profile' user.id %}" class="dropdown-item">Settings</a>
                     <a href="{% url 'logout' %}" class="dropdown-item">Logout</a>
                 </div>
@@ -274,9 +274,7 @@
                                     <a href="{% url 'new_lesson' %}" class="btn btn-info">
                                         Create New Lesson
                                     </a>
-                                    {% for category in selected_category %}
-                                        <a class="dropdown-item" href="{% url 'home' category %}">{{ category }}</a>
-                                    {% endfor %}
+
                                 </div>
                             </div>
                         </div>
@@ -286,18 +284,18 @@
 
             </div>
         </div>
-          <div class="mb-3"  style="padding-top: 14px; margin-right: 14px">
-                      <form  method="get" action="{% url 'search' %}" autocomplete="off">
-                    <div class="input-icon">
-                        <input type="text" name="query" value="" class="form-control form-control-rounded" placeholder="Search for test and lessons"
-                           aria-label="Search in website" style="color: black">
-                        <span class="input-icon-addon">
-                            </span>
-                    </div>
 
-                        </form>
-                </div>
-    </div>
+          <div class="mb-3" style="padding-top: 14px; margin-right: 14px">
+              <form method="get" action="{% url 'search' %}" autocomplete="off">
+                  <div class="input-icon">
+                      <input type="text" name="query" value="" data-bs-toggle="autosize" class="form-control form-control-rounded"
+                             placeholder="Search for test and lessons"
+                             aria-label="Search in website" style="color: black">
+                      <span class="input-icon-addon"></span>
+                  </div>
+              </form>
+          </div>
+          </div>
 </header>
 <div class="page-wrapper">
     <!-- Page header -->

@@ -1,20 +1,39 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 
 from lms.forms import CreateTestForm, CreateQuestionForm, CreateOptionFormSet
-from lms.models import Test, Question, Options, Lessons
+from lms.models import Test, Question, Options, Lessons, UserAnswer
 
 
 # test /.................
 def tests(request):
     test = Test.objects.filter(Q
                                (creator=request.user)
-                               | Q(users=request.user)).distinct()
+                               | Q(users=request.user)
+                               ).distinct()
 
     context = {
         'tests': test,
     }
     return render(request, 'test/show_test.html', context)
+
+
+@login_required
+def test_list(request):
+    # Get tests created by the current user or tests with answers provided by the current user
+    tests = Test.objects.filter(Q(creator=request.user) | Q(useranswer__user=request.user)).distinct()
+
+    # Create a dictionary to store test names and unique users who took each test
+    test_users_dict = {}
+    for test in tests:
+        # Get unique users who took this test
+        users_took_test = UserAnswer.objects.filter(test=test).values_list('user__first_name',
+                                                                           'user__last_name',
+                                                                           'user__email').distinct()
+        test_users_dict[test] = users_took_test
+
+    return render(request, 'test/display_tests.html', {'test_users_dict': test_users_dict})
 
 
 def create_test(request):
@@ -152,7 +171,7 @@ def search(request):
     query = request.GET.get('query')
     if query:
         result_lessons = Lessons.objects.filter(
-            Q(title__icontains=query) |  Q(creator__username__icontains=query)
+            Q(title__icontains=query) | Q(creator__username__icontains=query)
         )
         result_tests = Test.objects.filter(
             Q(name__icontains=query) | Q(creator__username__icontains=query)
@@ -166,5 +185,3 @@ def search(request):
         'lessons': result_lessons,
         'tests': result_tests,
     })
-
-

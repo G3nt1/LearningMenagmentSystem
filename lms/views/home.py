@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from lms.models import Lessons, Classrooms
+from lms.models import Lessons, Classrooms, ProfileUser
 from lms.forms import CreateLessonsForm, CreateClassroomForm, Classrooms
 from django.contrib.auth.decorators import login_required
 
@@ -22,8 +22,6 @@ def home(request, category_name=None):
     }
 
     return render(request, 'home.html', context)
-
-
 
 
 @login_required
@@ -84,7 +82,5 @@ def create_classroom(request):
     else:
         form = CreateClassroomForm()
         return render(request, 'lesson/create_classroom.html', {'form': form})
-
-
 
 # def search(request):

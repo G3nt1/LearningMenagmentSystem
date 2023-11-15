@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="fluidcontainer mt-8">
+        <h1 class="text-center text-teal mb-4">Test Results</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Test</th>
+                            <th>Created by</th>
+                            <th>Participants</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for test, users_took_test in test_users_dict.items %}
+                            <tr>
+                                <td>
+                                    <h2><strong class="text-teal">Test: {{ test.name }}</strong></h2>
+                                </td>
+                                <td>
+                                    {{ test.creator.first_name }} {{ test.creator.last_name }}
+                                </td>
+                                <td>
+                                    <ul class="list-group">
+                                        {% for user_first_name, user_last_name, user_email in users_took_test %}
+                                            {% if request.user == test.creator %}
+                                            <li class="list-group-item">
+                                            {{ user_first_name }} {{ user_last_name }} &mdash; {{ user_email }}
+                                            </li>
+                                                {% else %}
+                                                {% if forloop.first %}
+                                            <li class="list-group-item">
+                                                {{ request.user.first_name }} {{ request.user.last_name }} &mdash; {{ request.user.email }}
+                                            </li>
+                                                    {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+
+
+                                    </ul>
+                                </td>
+                                <td>
+                                    <a href="{% url 'answers' test.id %}" class="btn btn-outline-success">View Results</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

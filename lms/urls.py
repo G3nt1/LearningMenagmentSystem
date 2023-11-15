@@ -35,8 +35,10 @@ urlpatterns = [
     path('create_classroom', home.create_classroom, name='create_classroom'),
     path('create_test', exercises.create_test, name='create_test'),
     path('tests', exercises.tests, name='tests'),
+    path('display_tests', exercises.test_list, name='display_tests'),
     path('tests/<int:test_id>', exercises.edit_test, name='edit_test'),
     path('delete_test/<int:test_id>', exercises.delete_test, name='delete_test'),
+
 
     # Questions
     path('questions/<int:test_id>/', exercises.questions, name='questions'),
