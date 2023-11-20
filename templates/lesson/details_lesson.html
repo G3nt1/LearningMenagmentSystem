@@ -1,5 +1,6 @@
-{% load static %}
+
 {% include 'base.html' %}
+{% load static %}
 {% block content %}
   <style>
 
@@ -25,11 +26,10 @@
                     <h3 class="card-title"><a href="{% url 'details_lesson' lesson.id %}">{{ lesson.title }}</a></h3>
                     <div class="text-secondary">{{ lesson.description }}</div>
                 </div>
-            <div class="icons">
+            <div class="icons" style="height: 100px; width:100px; padding: 20px">
                 {% if lesson.file_upload.url|lower|slice:'-4:' == ".pdf" %}
                     <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
-                        <img src="{% static 'icons/pdf-icon.png' %}" alt="PDF Icon"
-                             class="file-icon"/>
+                        <img src="{% static 'icons/pdf-icon.png' %}" alt="PDF" class="file-icon"/>
                     </a>
                                 {% elif lesson.file_upload.url|lower|slice:'-4:' == '.psd' %}
                                         <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
@@ -48,35 +48,42 @@
                                             <img src="{% static 'icons/default-mp3.png' %}" alt="File Icon"
                                                  class="file-icon"/> </a>
                                     {% elif lesson.file_upload.url|lower|slice:'-4:' == '.zip' %}
-                                        <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
-                                            <img src="{% static 'icons/default-zip.png' %}" alt="File Icon"
-                                                 class="file-icon"/> </a>
-                                    {% elif lesson.file_upload.url|lower|slice:'-4:' == '.rar' %}
-                                        <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
-                                            <img src="{% static 'icons/default-rar.png' %}" alt="File Icon"
-                                                 class="file-icon"/> </a>
-                                    {% elif lesson.file_upload.url|upper|slice:'-4:' == '.MP4' %}
-                                        <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
-                                            <img src="{% static 'icons/default-video.png' %}" alt="File Icon"
-                                                 class="file-icon"/> </a>
-                                    {% elif lesson.file_upload.url|lower|slice:'-3:' == '.py' %}
-                                        <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
-                                            <img src="{% static 'icons/default-python.png' %}" alt="File Icon"
-                                                 class="file-icon"/> </a>
-                                    {% elif lesson.file_upload.url|lower|slice:'-3:' == '.js' %}
-                                        <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
-                                            <img src="{% static 'icons/default-JavaScript.png' %}" alt="File Icon"
-                                                 class="file-icon"/> </a>
+                    <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
+                        <img src="{% static 'icons/default-zip.png' %}" alt="File Icon"
+                             class="file-icon"/> </a>
+                {% elif lesson.file_upload.url|lower|slice:'-4:' == '.rar' %}
+                    <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
+                        <img src="{% static 'icons/default-rar.png' %}" alt="File Icon"
+                             class="file-icon"/> </a>
+                {% elif lesson.file_upload.url|upper|slice:'-4:' == '.MP4' %}
+                    <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
+                        <img src="{% static 'icons/default-video.png' %}" alt="File Icon"
+                             class="file-icon"/> </a>
+                {% elif lesson.file_upload.url|lower|slice:'-3:' == '.py' %}
+                    <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
+                        <img src="{% static 'icons/default-python.png' %}" alt="File Icon"
+                             class="file-icon"/> </a>
+                {% elif lesson.file_upload.url|lower|slice:'-3:' == '.js' %}
+                    <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
+                        <img src="{% static 'icons/default-JavaScript.png' %}" alt="File Icon"
+                             class="file-icon"/> </a>
 
-                                         {% elif lesson.file_upload.url|lower|slice:'-4:' == '.txt' %}
-                                        <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
-                                            <img src="{% static 'icons/default-Text.png' %}" class="file-icon"
-                                                 alt="File Icon"/>
-                                        </a>
-                                    {% endif %}
-                            </div>
+                {% elif lesson.file_upload.url|lower|slice:'-4:' == '.txt' %}
+                    <a href="#" onclick="openFile('{{ lesson.file_upload.url }}')">
+                        <img src="{% static 'icons/default-Text.png' %}" class="file-icon"
+                             alt="File Icon"/>
+                    </a>
+                {% endif %}
+            </div>
                 {% if lesson.image %}
                     <img class="card-img-top" src="{{ lesson.image.url }}" alt=""/>
+                {% endif %}
+                {% if lesson.video %}
+                    <video width="480" height="480" controls>
+                        <source src="{{ lesson.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+
                 {% endif %}
 
 
@@ -86,22 +93,25 @@
                 <div class="d-flex align-items-start pt-4 mt-auto" style="margin: auto; padding-bottom: 10px">
                     <span class="avatar">{{ lesson.creator.first_name|first }} {{ lesson.creator.last_name|first }}</span>
                     <div class="ms-3">
-                        <a href="#" class="text-body">Created By: {{ lesson.creator.first_name }} {{ lesson.creator.last_name }}</a>
+                        <a href="#" class="text-body">Created
+                            By: {{ lesson.creator.first_name }} {{ lesson.creator.last_name }}</a>
                         <div class="text-secondary">{{ lesson.created_at }}</div>
-                       {% if user == lesson.creator %}
-                        <a style="margin: 10px" class="btn btn-primary btn-xs" href="{% url 'edit_lesson' lesson.id %}">Edit</a>
-                        <a class="btn btn-danger btn-xs" href="{% url 'delete_lesson' lesson.id %}">Delete</a>
-                    {% endif %}
+                        {% if user == lesson.creator %}
+                            <a style="margin: 10px" class="btn btn-primary btn-xs"
+                               href="{% url 'edit_lesson' lesson.id %}">Edit</a>
+                            <a class="btn btn-danger btn-xs" href="{% url 'delete_lesson' lesson.id %}">Delete</a>
+                        {% endif %}
 
                     </div>
                 </div>
             </div>
         </div>
-        {% if forloop.counter|divisibleby:4 %}</div><div class="row">{% endif %}
+        {% if forloop.counter|divisibleby:4 %}</div>
+            <div class="row">{% endif %}
 
     {% endfor %}
 
-</div>
+        </div>
     </div>
 
 <script>

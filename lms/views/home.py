@@ -48,7 +48,7 @@ def edit_lesson(request, lesson_id):
             lesson = form.save(commit=False)
             lesson.creator = request.user
             lesson.save()
-            return redirect('home')
+            return redirect('details_lesson', lesson_id=lesson.id)
     else:
         form = CreateLessonsForm(instance=lesson)
     content = {'form': form}  # Include lessons in the content
