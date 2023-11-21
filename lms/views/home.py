@@ -6,12 +6,20 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
-
 def home(request):
-    lessons = Lessons.objects.filter(Q(users=request.user)
-                                     | Q(creator=request.user)).distinct()
+    classrooms = Classrooms.objects.all()
+    lessons = Lessons.objects.filter(Q(users=request.user) | Q(creator=request.user)).distinct()
 
-    context = {'lessons': lessons}
+    # Check if a classroom is selected in the request
+    selected_classroom_id = request.GET.get('classroom')
+    selected_classroom = None
+
+    if selected_classroom_id:
+        selected_classroom = get_object_or_404(Classrooms, id=selected_classroom_id)
+
+        lessons = lessons.filter(category=selected_classroom)
+
+    context = {'lessons': lessons, 'classrooms': classrooms, 'selected_classroom': selected_classroom}
 
     return render(request, 'home.html', context)
 

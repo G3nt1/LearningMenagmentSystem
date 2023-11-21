@@ -1,3 +1,4 @@
+{% load static %}
 
 
 <script src="./dist/js/demo-theme.min.js?1695847769"></script>
@@ -12,8 +13,9 @@
         </button>
         <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
             <a href="{% url 'home' %}">
-                <img src="" width="110" height="32" alt="LMS Mateli" class="navbar-brand-image">
+                LMS
             </a>
+
         </h1>
       {% if not request.user.is_authenticated %}
             <a style="padding-right: 10px" class="btn btn-outline-success" href="{% url 'login'%}">Login</a>
@@ -315,9 +317,13 @@
                 <div class="col-auto ms-auto d-print-none">
                     <div class="btn-list">
                   <span class="d-none d-sm-inline">
-{#                    <a href="{% url 'new_lesson' %}" class="btn btn-info">#}
-{#                      Create New Lesson#}
-{#                    </a>#}
+                        {% for classroom in classrooms %}
+                            <a href="?classroom={{ classroom.id }}" class="btn btn-outline-light" style="color: teal">
+                                {{ classroom }}
+                            </a>
+                        {% endfor %}
+
+
                   </span>
 {#                        <a href="{% url 'create_test' %}" class="btn btn-primary">#}
 {#                            Create new Test#}
