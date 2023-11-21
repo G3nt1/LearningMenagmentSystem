@@ -313,9 +313,6 @@
 
                     </h2>
                 </div>
-                <!-- Page title actions -->
-                <div class="col-auto ms-auto d-print-none">
-                    <div class="btn-list">
                   <span class="d-none d-sm-inline">
                         {% for classroom in classrooms %}
                             <a href="?classroom={{ classroom.id }}" class="btn btn-outline-light" style="color: teal">
@@ -325,6 +322,7 @@
 
 
                   </span>
+
 {#                        <a href="{% url 'create_test' %}" class="btn btn-primary">#}
 {#                            Create new Test#}
 {#                        </a>#}
@@ -343,6 +341,4 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
    {% endif %}

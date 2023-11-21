@@ -25,6 +25,9 @@ class Classrooms(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ('-created_at',)
+
     def __str__(self):
         return self.name
 
@@ -42,6 +45,9 @@ class Lessons(models.Model):
     category = models.ForeignKey(Classrooms, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     users = models.ManyToManyField(User, related_name='lessons_users', blank=True)
+
+    class Meta:
+        ordering = ('-created_at',)
 
     def __str__(self):
         return self.title
