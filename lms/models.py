@@ -41,6 +41,7 @@ class Lessons(models.Model):
                                  FileExtensionValidator(allowed_extensions=['MOV', 'avi', 'mp4', 'webm', 'mkv'])])
     category = models.ForeignKey(Classrooms, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    users = models.ManyToManyField(User, related_name='lessons_users', blank=True)
 
     def __str__(self):
         return self.title

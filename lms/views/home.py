@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from lms.models import Lessons, Classrooms, ProfileUser
 from lms.forms import CreateLessonsForm, CreateClassroomForm, Classrooms
@@ -6,20 +7,11 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-def home(request, category_name=None):
-    category = Classrooms.objects.all()
-    if category_name:
-        lessons = Lessons.objects.filter(category__name=category_name).order_by('-created_at')
-    else:
-        lessons = Lessons.objects.all().order_by('-created_at')
+def home(request):
+    lessons = Lessons.objects.filter(Q(users=request.user)
+                                     | Q(creator=request.user)).distinct()
 
-    user = request.user
-    context = {
-        'category': category_name,
-        'selected_category': category,
-        'lessons': lessons,
-        'user': user,
-    }
+    context = {'lessons': lessons}
 
     return render(request, 'home.html', context)
 
@@ -33,6 +25,8 @@ def create_lesson(request):
                 lesson = form.save(commit=False)
                 lesson.creator = request.user
                 lesson.save()
+                form.save_m2m()
+
                 return redirect('home')
         else:
             form = CreateLessonsForm()
@@ -48,6 +42,7 @@ def edit_lesson(request, lesson_id):
             lesson = form.save(commit=False)
             lesson.creator = request.user
             lesson.save()
+            form.save_m2m()
             return redirect('details_lesson', lesson_id=lesson.id)
     else:
         form = CreateLessonsForm(instance=lesson)

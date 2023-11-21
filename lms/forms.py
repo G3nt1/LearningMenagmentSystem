@@ -47,7 +47,11 @@ class LoginUserForm(forms.Form):
 class CreateLessonsForm(forms.ModelForm):
     class Meta:
         model = Lessons
-        fields = ('title', 'description', 'link', 'file_upload', 'image', 'video', 'category')
+        fields = ('title', 'description', 'link', 'file_upload', 'image', 'video', 'category', 'users')
+
+    def __init__(self, *args, **kwargs):
+        super(CreateLessonsForm, self).__init__(*args, **kwargs)
+        self.fields['users'].label_from_instance = lambda obj: "%s %s" % (obj.first_name, obj.last_name)
 
 
 class CreateClassroomForm(forms.ModelForm):
