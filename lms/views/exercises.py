@@ -3,20 +3,32 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 
 from lms.forms import CreateTestForm, CreateQuestionForm, CreateOptionFormSet
-from lms.models import Test, Question, Options, Lessons, UserAnswer
+from lms.models import Test, Question, Options, Lessons, UserAnswer, Classrooms
 
 
-# test /.................
+#  Test
 def tests(request):
-    test = Test.objects.filter(Q
-                               (creator=request.user)
-                               | Q(users=request.user)
-                               ).distinct()
+    classrooms = Classrooms.objects.all()
+    # Get the selected classroom from the request
+    selected_classroom_id = request.GET.get('classroom')
+    selected_classroom = None
 
-    context = {
-        'tests': test,
-    }
+    # If a classroom is selected, filter tests based on the selected classroom
+    if selected_classroom_id:
+        selected_classroom = get_object_or_404(Classrooms, id=selected_classroom_id)
+        tests = Test.objects.filter(
+            Q(creator=request.user) | Q(users=request.user),
+            category=selected_classroom
+        ).distinct()
+    else:
+        # If no classroom is selected, show all tests
+        tests = Test.objects.filter(
+            Q(creator=request.user) | Q(users=request.user)
+        ).distinct()
+
+    context = {'tests': tests, 'selected_classroom': selected_classroom, 'classrooms':classrooms}
     return render(request, 'test/show_test.html', context)
+
 
 
 @login_required

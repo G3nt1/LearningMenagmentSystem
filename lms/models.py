@@ -62,6 +62,19 @@ class Test(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     users = models.ManyToManyField(User, related_name='tests', blank=True)
 
+    class Meta:
+        ordering = ('-created_at',)
+
+    def is_completed_by_user(self, user):
+        # Assuming a UserAnswer model with a foreign key to Test and a field indicating completion
+        user_answer = UserAnswer.objects.filter(test=self, user=user).first()
+
+        # Check if the user has submitted answers for all questions in the test
+        if user_answer and user_answer.has_answered_all_questions():
+            return True
+
+        return False
+
     def __str__(self):
         return self.name
 

@@ -30,7 +30,12 @@
                                 </div>
                             {% else %}
                                 <div class="d-flex">
+                                                                  {% if test.is_completed %}
+                                    <a href="{% url 'view_result' test.id %}" class="btn btn-outline-success ms-auto">View Result</a>
+                                {% else %}
                                     <a href="{% url 'submit_answer' test.id %}" class="btn btn-outline-primary ms-auto">Make this test</a>
+                                {% endif %}
+
                                 </div>
                             {% endif %}
                         </div>
@@ -39,6 +44,7 @@
             </div>
 
         {% endfor %}
+
     </div>
 
 {% else %}
