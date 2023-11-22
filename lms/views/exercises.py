@@ -26,9 +26,8 @@ def tests(request):
             Q(creator=request.user) | Q(users=request.user)
         ).distinct()
 
-    context = {'tests': tests, 'selected_classroom': selected_classroom, 'classrooms':classrooms}
+    context = {'tests': tests, 'selected_classroom': selected_classroom, 'classrooms': classrooms}
     return render(request, 'test/show_test.html', context)
-
 
 
 @login_required
@@ -56,6 +55,7 @@ def create_test(request):
             test.creator = request.user
             test.save()
             form.save_m2m()  # Save the many-to-many relationships
+
             return redirect('tests')
     else:
         form = CreateTestForm()
