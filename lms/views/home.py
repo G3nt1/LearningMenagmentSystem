@@ -1,3 +1,4 @@
+import markdown
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from lms.models import Lessons, Classrooms, ProfileUser
@@ -8,9 +9,17 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def home(request):
     classrooms = Classrooms.objects.all()
-    lessons = Lessons.objects.filter(Q(users=request.user) | Q(creator=request.user)).distinct()
-
-    # Check if a classroom is selected in the request
+    lessons = Lessons.objects.filter(creator=request.user).distinct()
+    if lessons.exists():
+        # Assuming you want to get the description of the first lesson
+        html = markdown.markdown(lessons[0].description, extensions=[
+            'markdown.extensions.fenced_code',
+            'markdown.extensions.admonition',
+            'markdown.extensions.tables',
+            'fenced_code',
+        ])
+    else:
+        html = ""
     selected_classroom_id = request.GET.get('classroom')
     selected_classroom = None
 
@@ -19,7 +28,8 @@ def home(request):
 
         lessons = lessons.filter(category=selected_classroom)
 
-    context = {'lessons': lessons, 'classrooms': classrooms, 'selected_classroom': selected_classroom}
+    context = {'lessons': lessons, 'classrooms': classrooms, 'selected_classroom': selected_classroom,
+               'html_text': html}
 
     return render(request, 'home.html', context)
 
@@ -38,7 +48,7 @@ def create_lesson(request):
                 return redirect('home')
         else:
             form = CreateLessonsForm()
-        content = {'form': form}  # Include lessons in the content
+        content = {'form': form}
         return render(request, 'lesson/create_new_lesson.html', content)
 
 
@@ -59,8 +69,15 @@ def edit_lesson(request, lesson_id):
 
 
 def lesson_details(request, lesson_id):
-    lesson = Lessons.objects.filter(id=lesson_id)
-    return render(request, 'lesson/details_lesson.html', {'lesson': lesson})
+    lesson = Lessons.objects.get(id=lesson_id)
+    html = markdown.markdown(lesson.description, extensions=[
+        'markdown.extensions.fenced_code',
+        'markdown.extensions.admonition',
+        'markdown.extensions.tables',
+        'fenced_code',
+    ])
+
+    return render(request, 'lesson/details_lesson.html', {'lesson': lesson, 'html': html})
 
 
 def delete_lesson(request, lesson_id):

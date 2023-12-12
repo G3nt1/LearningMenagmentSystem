@@ -194,7 +194,7 @@
                                 <div class="dropdown-menu-columns">
                                     <div class="dropdown-menu-column">
                                         <a class='dropdown-item' href="{% url 'create_classroom' %}">
-                                            Create new Classroom
+                                            Create new Category
                                         </a>
 
                                         <a class='dropdown-item' href="{% url 'new_lesson' %}">
@@ -211,22 +211,15 @@
                            style="background-color: gray; color: white">Category</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">  {% for classroom in classrooms %}
-
                                 <a href="?classroom={{ classroom.id }}" class="btn btn-outline-light"
                                    style="color: teal; text-align: center">
                                 {{ classroom.name }}
-
                             {% endfor %}</a>
                             </a>
-
                         </div>
                     </div>
-
-
                 </div>
             </div>
-
-
             <div class="mb-3" style="padding-top: 14px; margin-right: 14px">
                 <form method="get" action="{% url 'search' %}" autocomplete="off">
                     <div class="input-icon">
@@ -240,10 +233,5 @@
             </div>
             </div>
             </header>
-
-
-
-
-
-
+            
         {% endif %}
