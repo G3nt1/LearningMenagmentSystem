@@ -47,7 +47,7 @@ class LoginUserForm(forms.Form):
 class CreateLessonsForm(forms.ModelForm):
     class Meta:
         model = Lessons
-        fields = ('title', 'description', 'link', 'file_upload', 'image', 'video', 'category', 'users')
+        fields = ('title', 'description',)
 
     def __init__(self, *args, **kwargs):
         super(CreateLessonsForm, self).__init__(*args, **kwargs)

@@ -2,13 +2,17 @@
 {% include 'base.html' %}
 {% load crispy_forms_filters %}
 {% block content %}
-    <div class="container" style="padding: 150px">
-    <h1 style="text-align: center">Create Options for Question:  {{ question.name }}</h1>
-<form method="post" action="{% url 'create_options' question.id %}">
-    {% csrf_token %}
-    {{ formset | crispy }}
+<div class="container my-5">
+    <h1 class="text-center">Create Options for Question: {{ question.name }}</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="post" action="{% url 'create_options' question.id %}" class="my-4">
+                {% csrf_token %}
+                {{ formset|crispy }}
 
-    <button type="submit" class="btn btn-info">Create</button>
-</form>
+                <button type="submit" class="btn btn-info mt-3">Create</button>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}

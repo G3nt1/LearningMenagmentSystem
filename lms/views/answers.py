@@ -47,7 +47,6 @@ def submit_answers(request, test_id):
 
 def show_answers(request, test_id):
     test = get_object_or_404(Test, pk=test_id)
-
     # Check if the current user is the test creator
     if request.user == test.creator:
         user_answers = UserAnswer.objects.filter(test=test_id)
