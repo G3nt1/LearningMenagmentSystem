@@ -20,7 +20,7 @@ def home(request):
         ])
     else:
         html = ""
-    # Check if a classroom is selected in the request
+
     selected_classroom_id = request.GET.get('classroom')
     selected_classroom = None
 
@@ -29,7 +29,7 @@ def home(request):
 
         lessons = lessons.filter(category=selected_classroom)
 
-    context = {'lessons': lessons, 'classrooms': classrooms, 'selected_classroom': selected_classroom}
+    context = {'lessons': lessons, 'classrooms': classrooms, 'selected_classroom': selected_classroom, 'html':html}
 
     return render(request, 'home.html', context)
 
