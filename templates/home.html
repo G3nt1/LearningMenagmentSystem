@@ -20,7 +20,7 @@
                     {% endif %}
 
                     <h3 class="card-title"><a href="{% url 'details_lesson' lesson.id %}">{{ lesson.title }}</a></h3>
-                    <div class="text-secondary">{{ lesson.description|truncatechars:600 }}</div>
+                    <div class="text-secondary">{{ html_text | safe }}</div>
                 </div>
              {% if lesson.link %}
                 <a style="margin-left: 25px" href="{{ lesson.link }}">For more info Click here</a>
