@@ -6,21 +6,11 @@ from lms.forms import CreateLessonsForm, CreateClassroomForm, Classrooms
 from django.contrib.auth.decorators import login_required
 
 
-# Create your views here.
 def home(request):
     classrooms = Classrooms.objects.all()
     lessons = Lessons.objects.filter(Q(users=request.user) | Q(creator=request.user)).distinct()
-    if lessons.exists():
-        # Assuming you want to get the description of the first lesson
-        html = markdown.markdown(lessons[0].description, extensions=[
-            'markdown.extensions.fenced_code',
-            'markdown.extensions.admonition',
-            'markdown.extensions.tables',
-            'fenced_code',
-        ])
-    else:
-        html = ""
 
+    # Check if a classroom is selected in the request
     selected_classroom_id = request.GET.get('classroom')
     selected_classroom = None
 
@@ -29,7 +19,7 @@ def home(request):
 
         lessons = lessons.filter(category=selected_classroom)
 
-    context = {'lessons': lessons, 'classrooms': classrooms, 'selected_classroom': selected_classroom, 'html':html}
+    context = {'lessons': lessons, 'classrooms': classrooms, 'selected_classroom': selected_classroom}
 
     return render(request, 'home.html', context)
 
@@ -77,7 +67,8 @@ def lesson_details(request, lesson_id):
         'fenced_code',
     ])
 
-    return render(request, 'lesson/details_lesson.html', {'lesson': lesson,'html': html })
+    return render(request, 'lesson/details_lesson.html', {'lesson': lesson, 'html': html})
+
 
 def delete_lesson(request, lesson_id):
     lesson = get_object_or_404(Lessons, id=lesson_id)
@@ -102,4 +93,4 @@ def create_classroom(request):
         form = CreateClassroomForm()
         return render(request, 'lesson/create_classroom.html', {'form': form})
 
-# def search(request):
+

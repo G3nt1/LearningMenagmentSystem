@@ -37,6 +37,7 @@ class Classrooms(models.Model):
 class Lessons(models.Model):
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=255)
+    comment = models.TextField(max_length=255, blank=True, null=True)
     description = models.TextField()
     category = models.ForeignKey(Classrooms, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
